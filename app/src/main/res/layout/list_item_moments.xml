@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/moments_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/card_margin_vertical_big_activity"
+    android:layout_marginEnd="@dimen/card_margin_horizontal_big_activity"
+    android:layout_marginStart="@dimen/card_margin_horizontal_big_activity"
+    android:layout_marginTop="@dimen/card_margin_vertical_big_activity"
+    android:background="@color/white"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/card_recycler_corner_radius"
+    app:cardElevation="@dimen/card_recycler_elevation">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/text_margin">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/moments_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/splash" />
+
+        <TextView
+            android:id="@+id/moments_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@id/moments_image"
+            android:text="蒋凯"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/moments_tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="3dp"
+            android:text="今天12:29"
+            android:textColor="@color/black" />
+
+        <com.vanniktech.emoji.EmojiTextView
+            android:id="@+id/moments_tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/moments_tv_name"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@id/moments_image"
+            android:maxLines="7"
+            android:text="今天天气不错啊！项目中遇到多个RadioGroup中单选RadioButton ,设置了默认选中第一个 . 然后就 能选中两个RadioButton . . ..
+我开始这样给设置默认选中一个的:
+今天天气不错啊！项目中遇到多个RadioGroup中单选R今天天气不错啊！项目中遇到多个RadioGroup中单选R"
+            android:textColor="@color/black_semi_transparent" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

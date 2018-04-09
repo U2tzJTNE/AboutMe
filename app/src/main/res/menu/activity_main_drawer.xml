@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_app"
+            android:icon="@drawable/ic_menu_apps"
+            android:title="@string/nav_title_app" />
+        <item
+            android:id="@+id/nav_blog"
+            android:icon="@drawable/ic_menu_blog"
+            android:title="@string/nav_title_blog" />
+        <item
+            android:id="@+id/nav_github"
+            android:icon="@drawable/ic_menu_github"
+            android:title="@string/nav_title_github" />
+        <item
+            android:id="@+id/nav_moments"
+            android:icon="@drawable/ic_menu_moments"
+            android:title="@string/nav_title_moments" />
+    </group>
+
+    <item
+        android:id="@+id/nav_about_me"
+        android:icon="@drawable/ic_menu_about"
+        android:title="@string/nav_title_about" />
+
+    <group android:id="@+id/setting">
+
+        <item
+            android:id="@+id/nav_theme"
+            android:icon="@drawable/ic_menu_theme"
+            android:title="@string/nav_title_theme" />
+
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_menu_settings"
+            android:title="@string/nav_title_setting" />
+    </group>
+    <group android:id="@+id/exit">
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_menu_exit"
+            android:title="@string/nav_title_exit" />
+    </group>
+</menu>

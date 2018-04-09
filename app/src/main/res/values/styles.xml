@@ -1,0 +1,121 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">false</item>
+        <item name="android:windowAllowReturnTransitionOverlap">false</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="AppTheme.Splash" parent="AppTheme.Guide">
+        <!--闪屏页主题-->
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <style name="AppTheme.Guide" parent="AppTheme.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.Button" parent="AppTheme">
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
+    </style>
+
+    <style name="WindowAnimationFadeInOut">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!--MainActivity主题0  默认   start-->
+    <style name="AppTheme.Main" parent="AppTheme.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    <!--主题1-->
+    <style name="AppTheme.Main.Color1">
+        <item name="colorPrimary">@color/theme1_Primary</item>
+        <item name="colorPrimaryDark">@color/theme1_PrimaryDark</item>
+        <item name="colorAccent">@color/theme1_Accent</item>
+    </style>
+    <!--主题2-->
+    <style name="AppTheme.Main.Color2">
+        <item name="colorPrimary">@color/theme2_Primary</item>
+        <item name="colorPrimaryDark">@color/theme2_PrimaryDark</item>
+        <item name="colorAccent">@color/theme2_Accent</item>
+    </style>
+    <!--主题3-->
+    <style name="AppTheme.Main.Color3">
+        <item name="colorPrimary">@color/theme3_Primary</item>
+        <item name="colorPrimaryDark">@color/theme3_PrimaryDark</item>
+        <item name="colorAccent">@color/theme3_Accent</item>
+    </style>
+    <!--主题4-->
+    <style name="AppTheme.Main.Color4">
+        <item name="colorPrimary">@color/theme4_Primary</item>
+        <item name="colorPrimaryDark">@color/theme4_PrimaryDark</item>
+        <item name="colorAccent">@color/theme4_Accent</item>
+    </style>
+    <!--主题5-->
+    <style name="AppTheme.Main.Color5">
+        <item name="colorPrimary">@color/theme5_Primary</item>
+        <item name="colorPrimaryDark">@color/theme5_PrimaryDark</item>
+        <item name="colorAccent">@color/theme5_Accent</item>
+    </style>
+    <!--MainActivity主题0  默认   end-->
+
+    <!--            其它页面主题    start-->
+    <!--主题1-->
+    <style name="AppTheme.Color1">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+    <!--主题2-->
+    <style name="AppTheme.Color2">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+    <!--主题3-->
+    <style name="AppTheme.Color3">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+    <!--主题4-->
+    <style name="AppTheme.Color4">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+    <!--主题5-->
+    <style name="AppTheme.Color5">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+
+    <!--   其它页面主题    end-->
+
+</resources>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/card_margin_vertical_big_activity"
+    android:layout_marginEnd="@dimen/card_margin_horizontal_big_activity"
+    android:layout_marginStart="@dimen/card_margin_horizontal_big_activity"
+    android:layout_marginTop="@dimen/card_margin_vertical_big_activity"
+    android:background="@color/white"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/card_recycler_corner_radius"
+    app:cardElevation="@dimen/card_recycler_elevation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/iv_icon"
+                android:singleLine="true"
+                android:text="京东"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <RatingBar
+                android:id="@+id/rb_star"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_below="@id/tv_name"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/iv_icon"
+                android:isIndicator="true"
+                android:progressDrawable="@drawable/custom_ratingbar"
+                android:rating="5" />
+
+            <TextView
+                android:id="@+id/tv_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rb_star"
+                android:layout_toEndOf="@id/iv_icon"
+                android:singleLine="true"
+                android:text="45.3MB"
+                android:textColor="#9e9e9e"
+                android:textSize="15sp" />
+
+
+            <com.u2tzjtne.aboutme.ui.view.CProgressButton
+                android:id="@+id/btn_download"
+                android:layout_width="65dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="50dp"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="12sp"
+                app:color="@color/colorAccent"
+                app:drawable_xml="@drawable/bounder"
+                app:radius="40dp"
+                app:stroke_width="1dp" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="京东是中国最大的巴拉巴拉巴拉巴拉巴拉巴拉拉巴拉拉巴拉拉拉巴拉拉巴拉拉不拉了"
+            android:textColor="#9e9e9e"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_package"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

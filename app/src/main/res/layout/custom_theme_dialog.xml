@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg_v21"
+    android:paddingBottom="35dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="35dp">
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/change_theme_text"
+        android:textColor="@android:color/black"
+        android:textSize="20.0sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTitle"
+        android:gravity="center_horizontal">
+
+        <CheckBox
+            android:id="@+id/checkBox0"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/theme_color_0_selector"
+            android:button="@null"
+            android:checked="false" />
+
+        <CheckBox
+            android:id="@+id/checkBox1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@id/checkBox0"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_toEndOf="@id/checkBox0"
+            android:background="@drawable/theme_color_1_selector"
+            android:button="@null"
+            android:checked="false" />
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@id/checkBox1"
+            android:layout_toEndOf="@+id/checkBox1"
+            android:background="@drawable/theme_color_2_selector"
+            android:button="@null"
+            android:checked="false" />
+
+        <CheckBox
+            android:id="@+id/checkBox3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/checkBox1"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/theme_color_3_selector"
+            android:button="@null"
+            android:checked="false" />
+
+        <CheckBox
+            android:id="@+id/checkBox4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@id/checkBox3"
+            android:layout_below="@id/checkBox2"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_toEndOf="@id/checkBox3"
+            android:background="@drawable/theme_color_4_selector"
+            android:button="@null"
+            android:checked="false" />
+
+        <CheckBox
+            android:id="@+id/checkBox5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@id/checkBox3"
+            android:layout_below="@id/checkBox3"
+            android:layout_toEndOf="@id/checkBox4"
+            android:background="@drawable/theme_color_5_selector"
+            android:button="@null"
+            android:checked="false" />
+    </RelativeLayout>
+
+</RelativeLayout>

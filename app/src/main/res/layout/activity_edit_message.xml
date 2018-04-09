@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_pressed"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.u2tzjtne.aboutme.ui.activity.EditMessageActivity">
+
+    <!-- progress -->
+    <ProgressBar
+        android:id="@+id/edit_message_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/edit_message_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/layout_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin_vertical"
+                android:layout_marginEnd="@dimen/card_margin_horizontal"
+                android:layout_marginStart="@dimen/card_margin_horizontal"
+                android:layout_marginTop="@dimen/card_margin_vertical"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="@dimen/card_recycler_corner_radius"
+                app:cardElevation="@dimen/card_recycler_elevation">
+
+                <com.vanniktech.emoji.EmojiEditText
+                    android:id="@+id/edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_margin="10dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="说点什么吧..."
+                    android:imeOptions="actionSend"
+                    android:inputType="textCapSentences|textMultiLine" />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin_vertical"
+                android:layout_marginEnd="@dimen/card_margin_horizontal"
+                android:layout_marginStart="@dimen/card_margin_horizontal"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="@dimen/card_recycler_corner_radius"
+                app:cardElevation="@dimen/card_recycler_elevation">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/app_list_item_bg_normal"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="10dp">
+
+                    <CheckBox
+                        android:id="@+id/box_emoji"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/ic_emoji_selector"
+                        android:button="@null" />
+
+                    <CheckBox
+                        android:id="@+id/box_font_size"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_font_size_selector"
+                        android:button="@null" />
+
+                    <CheckBox
+                        android:id="@+id/box_theme"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/ic_theme_selector"
+                        android:button="@null" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/layout_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin_vertical"
+                android:layout_marginEnd="@dimen/card_margin_horizontal"
+                android:layout_marginStart="@dimen/card_margin_horizontal"
+                android:foreground="?attr/selectableItemBackground"
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/card_recycler_corner_radius"
+                app:cardElevation="@dimen/card_recycler_elevation">
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/app_list_item_bg_normal"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:scrollbars="none">
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioButton0"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/moments_color_0_selector"
+                            android:button="@null"
+                            android:checked="false" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/theme_color_0_selector"
+                            android:button="@null"
+                            android:checked="false" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/theme_color_1_selector"
+                            android:button="@null"
+                            android:checked="false" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton3"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/theme_color_2_selector"
+                            android:button="@null"
+                            android:checked="false" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton4"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/theme_color_3_selector"
+                            android:button="@null"
+                            android:checked="false" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton5"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/theme_color_4_selector"
+                            android:button="@null"
+                            android:checked="false" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton6"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/theme_color_5_selector"
+                            android:button="@null"
+                            android:checked="false" />
+
+                    </RadioGroup>
+                </HorizontalScrollView>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/layout_font_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin_vertical"
+                android:layout_marginEnd="@dimen/card_margin_horizontal"
+                android:layout_marginStart="@dimen/card_margin_horizontal"
+                android:foreground="?attr/selectableItemBackground"
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/card_recycler_corner_radius"
+                app:cardElevation="@dimen/card_recycler_elevation">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/app_list_item_bg_normal"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_horizontal_margin"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="A"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <com.xw.repo.BubbleSeekBar
+                        android:id="@+id/bubbleSeekBar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        app:bsb_bubble_color="@color/colorAccent"
+                        app:bsb_bubble_text_color="@color/white"
+                        app:bsb_max="13"
+                        app:bsb_min="26"
+                        app:bsb_progress="18"
+                        app:bsb_second_track_color="@color/colorPrimary"
+                        app:bsb_section_count="5"
+                        app:bsb_section_text_position="below_section_mark"
+                        app:bsb_seek_by_section="true"
+                        app:bsb_show_progress_in_float="false"
+                        app:bsb_show_section_mark="true"
+                        app:bsb_show_section_text="true"
+                        app:bsb_show_thumb_text="false"
+                        app:bsb_track_color="@color/colorAccent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="A"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

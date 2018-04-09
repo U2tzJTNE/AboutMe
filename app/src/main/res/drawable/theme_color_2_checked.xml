@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/theme_color_2_normal" />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/change_color_checked" />
+    </item>
+
+</layer-list>
