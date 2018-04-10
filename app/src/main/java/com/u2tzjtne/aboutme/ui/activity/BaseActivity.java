@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.util.Const;
-import com.u2tzjtne.aboutme.util.SPUtils;
+import com.u2tzjtne.aboutme.util.SPUtil;
 
 
 /**
@@ -27,7 +27,7 @@ public class BaseActivity extends AppCompatActivity {
 
     //初始化主题
     public void initTheme() {
-        int themeType = SPUtils.getInt(Const.THEME_TYPE, 100);
+        int themeType = SPUtil.getInt(Const.THEME_TYPE, 100);
         switch (themeType) {
             case 100:
                 setTheme(R.style.AppTheme);

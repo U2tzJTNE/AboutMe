@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 
 import com.u2tzjtne.aboutme.ui.view.LoadingPage;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mLoadingPage = new LoadingPage(UIUtils.getContext()) {
+        mLoadingPage = new LoadingPage(UIUtil.getContext()) {
 
             @Override
             public View onCreateSuccessView() {

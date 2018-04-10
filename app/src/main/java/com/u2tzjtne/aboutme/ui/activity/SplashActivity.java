@@ -30,7 +30,7 @@ import com.u2tzjtne.aboutme.http.HttpHelper;
 import com.u2tzjtne.aboutme.http.Interceptor.ProgressInterceptor;
 import com.u2tzjtne.aboutme.http.ProgressListener;
 import com.u2tzjtne.aboutme.util.Const;
-import com.u2tzjtne.aboutme.util.SPUtils;
+import com.u2tzjtne.aboutme.util.SPUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -97,7 +97,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         };
         //是否检查更新 默认检查更新
-        if (SPUtils.getBoolean(Const.IS_CHECK_UPDATE, true)) {
+        if (SPUtil.getBoolean(Const.IS_CHECK_UPDATE, true)) {
             checkUpdate();//检查更新
         } else {
             Handler handler = new Handler();
@@ -352,7 +352,7 @@ public class SplashActivity extends AppCompatActivity {
      */
     private void loadMain() {
         Intent intent;
-        if (SPUtils.getBoolean(Const.FIRST_LAUNCH, true)) {
+        if (SPUtil.getBoolean(Const.FIRST_LAUNCH, true)) {
             intent = new Intent(SplashActivity.this, GuideActivity.class);
         } else {
             intent = new Intent(SplashActivity.this, MainActivity.class);

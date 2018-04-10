@@ -1,9 +1,9 @@
 package com.u2tzjtne.aboutme.http.protocol;
 
 import com.u2tzjtne.aboutme.http.HttpHelper;
-import com.u2tzjtne.aboutme.util.IOUtils;
-import com.u2tzjtne.aboutme.util.StringUtils;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.IOUtil;
+import com.u2tzjtne.aboutme.util.StringUtil;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -46,7 +46,7 @@ public abstract class BaseProtocol<T> {
      */
     private String getCache(int index) {
         // 获取系统缓存目录
-        File cacheDir = UIUtils.getContext().getCacheDir();
+        File cacheDir = UIUtil.getContext().getCacheDir();
         // 以网络链接作为文件名称,保证特定接口对应特定数据
         File cacheFile = new File(cacheDir, getKey() + "?index=" + index
                 + getParams());
@@ -70,7 +70,7 @@ public abstract class BaseProtocol<T> {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                IOUtils.close(reader);
+                IOUtil.close(reader);
             }
         }
 
@@ -82,7 +82,7 @@ public abstract class BaseProtocol<T> {
      */
     private void setCache(String result, int index) {
         // 获取系统缓存目录
-        File cacheDir = UIUtils.getContext().getCacheDir();
+        File cacheDir = UIUtil.getContext().getCacheDir();
         // 以网络链接作为文件名称,保证特定接口对应特定数据
         File cacheFile = new File(cacheDir, getKey() + "?index=" + index
                 + getParams());
@@ -99,7 +99,7 @@ public abstract class BaseProtocol<T> {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            IOUtils.close(writer);
+            IOUtil.close(writer);
         }
     }
 
@@ -113,7 +113,7 @@ public abstract class BaseProtocol<T> {
         HttpHelper.HttpResult result = HttpHelper.get(HttpHelper.URL + getKey() + "?index=" + index + getParams());
         if (result != null) {
             String strResult = result.getString();
-            if (!StringUtils.isEmpty(strResult)) {
+            if (!StringUtil.isEmpty(strResult)) {
                 // 将缓存写到本地文件中
                 if (setCache) {
                     setCache(strResult, index);

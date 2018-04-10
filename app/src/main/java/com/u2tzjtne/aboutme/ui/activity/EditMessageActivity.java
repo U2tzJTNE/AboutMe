@@ -24,7 +24,7 @@ import com.u2tzjtne.aboutme.bean.MyUser;
 import com.u2tzjtne.aboutme.http.HttpHelper;
 import com.u2tzjtne.aboutme.model.UserModel;
 import com.u2tzjtne.aboutme.util.Const;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.UIUtil;
 import com.vanniktech.emoji.EmojiEditText;
 import com.vanniktech.emoji.EmojiPopup;
 import com.xw.repo.BubbleSeekBar;
@@ -219,7 +219,7 @@ public class EditMessageActivity extends AppCompatActivity implements View.OnCli
                 try {
                     HttpHelper.HttpResult result = HttpHelper.post(HttpHelper.URL + "moments", new StringEntity(json, "UTF-8"));
                     if (result.getCode() == 200) {
-                        UIUtils.runOnUiThread(new Runnable() {
+                        UIUtil.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (emojiPopup.isShowing()) {
@@ -230,7 +230,7 @@ public class EditMessageActivity extends AppCompatActivity implements View.OnCli
                         setResult(Const.RESULT_CODE_SEND_MESSAGE);
                         finish();
                     } else {
-                        UIUtils.runOnUiThread(new Runnable() {
+                        UIUtil.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 edit_message_progress.setVisibility(View.GONE);

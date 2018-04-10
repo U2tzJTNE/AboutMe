@@ -3,14 +3,14 @@ package com.u2tzjtne.aboutme.util;
 import java.io.Closeable;
 import java.io.IOException;
 
-public class IOUtils {
+public class IOUtil {
 	/** 关闭流 */
 	public static boolean close(Closeable io) {
 		if (io != null) {
 			try {
 				io.close();
 			} catch (IOException e) {
-				LogUtils.e(e);
+				LogUtil.e(e);
 			}
 		}
 		return true;

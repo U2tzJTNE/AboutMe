@@ -23,7 +23,7 @@ import com.u2tzjtne.aboutme.http.HttpHelper;
 import com.u2tzjtne.aboutme.manager.DownloadManager;
 import com.u2tzjtne.aboutme.ui.activity.AppDetailActivity;
 import com.u2tzjtne.aboutme.ui.view.CProgressButton;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 import java.util.ArrayList;
 
@@ -93,7 +93,7 @@ public class AppPagerAdapter extends RecyclerView.Adapter<AppPagerAdapter.AppHol
             holder.tvName.setText(mAppInfo.getName());
             holder.tvDesc.setText(mAppInfo.getDes());
             holder.tvPackageName.setText(mAppInfo.getPackageName());
-            holder.tvSize.setText(Formatter.formatFileSize(UIUtils.getContext(), mAppInfo.getSize()));
+            holder.tvSize.setText(Formatter.formatFileSize(UIUtil.getContext(), mAppInfo.getSize()));
             holder.rbStar.setRating(mAppInfo.getStars());
             holder.btnDownload.setOnClickListener(this);
             Glide.with(context).load(HttpHelper.URL + "image?name=" + mAppInfo.getIconUrl()).into(holder.ivIcon);
@@ -169,7 +169,7 @@ public class AppPagerAdapter extends RecyclerView.Adapter<AppPagerAdapter.AppHol
     private void refreshOnMainThread(final DownloadBean info) {
         // 判断要刷新的下载对象是否是当前的应用
         if (info.getId() == mAppInfo.getId()) {
-            UIUtils.runOnUiThread(new Runnable() {
+            UIUtil.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     refreshUI(info.getProgress(), info.getCurrentState());

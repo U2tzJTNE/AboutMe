@@ -12,7 +12,7 @@ import com.u2tzjtne.aboutme.bean.AppBean;
 import com.u2tzjtne.aboutme.bean.DownloadBean;
 import com.u2tzjtne.aboutme.manager.DownloadManager;
 import com.u2tzjtne.aboutme.ui.view.ProgressHorizontal;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 
 /**
@@ -35,7 +35,7 @@ public class DetailDownloadHolder extends BaseHolder<AppBean> implements Downloa
 
     @Override
     public View initView() {
-        View view = View.inflate(UIUtils.getContext(),
+        View view = View.inflate(UIUtil.getContext(),
                 R.layout.layout_detail_download, null);
         btnDownload = view.findViewById(R.id.btn_detail_download);
         flDownload = view.findViewById(R.id.fl_download);
@@ -43,9 +43,9 @@ public class DetailDownloadHolder extends BaseHolder<AppBean> implements Downloa
         flDownload.setOnClickListener(this);
 
         // 添加进度条布局
-        pbProgress = new ProgressHorizontal(UIUtils.getContext());
+        pbProgress = new ProgressHorizontal(UIUtil.getContext());
         pbProgress.setProgressTextColor(Color.WHITE);// 文字颜色为白色
-        pbProgress.setProgressTextSize(UIUtils.dp2px(18));// 文字大小
+        pbProgress.setProgressTextSize(UIUtil.dp2px(18));// 文字大小
         pbProgress.setProgressResource(R.drawable.progress_normal);// 进度条颜色
         pbProgress.setProgressBackgroundResource(R.drawable.progress_bg);// 进度条背景色
         // 初始化布局参数
@@ -91,11 +91,11 @@ public class DetailDownloadHolder extends BaseHolder<AppBean> implements Downloa
         switch (state) {
             case DownloadManager.STATE_NONE:
                 flDownload.setVisibility(View.GONE);
-                btnDownload.setText(UIUtils.getString(R.string.app_state_download));
+                btnDownload.setText(UIUtil.getString(R.string.app_state_download));
                 break;
             case DownloadManager.STATE_WAITING:
                 flDownload.setVisibility(View.GONE);
-                btnDownload.setText(UIUtils.getString(R.string.app_state_waiting));
+                btnDownload.setText(UIUtil.getString(R.string.app_state_waiting));
                 break;
             case DownloadManager.STATE_DOWNLOAD:
                 flDownload.setVisibility(View.VISIBLE);
@@ -107,18 +107,18 @@ public class DetailDownloadHolder extends BaseHolder<AppBean> implements Downloa
                 btnDownload.setVisibility(View.GONE);
                 flDownload.setVisibility(View.VISIBLE);
                 pbProgress.setProgress(progress);
-                pbProgress.setCenterText(UIUtils
+                pbProgress.setCenterText(UIUtil
                         .getString(R.string.app_state_paused));
                 break;
             case DownloadManager.STATE_ERROR:
                 flDownload.setVisibility(View.GONE);
                 btnDownload.setVisibility(View.VISIBLE);
-                btnDownload.setText(UIUtils.getString(R.string.app_state_error));
+                btnDownload.setText(UIUtil.getString(R.string.app_state_error));
                 break;
             case DownloadManager.STATE_SUCCESS:
                 flDownload.setVisibility(View.GONE);
                 btnDownload.setVisibility(View.VISIBLE);
-                btnDownload.setText(UIUtils.getString(R.string.app_state_downloaded));
+                btnDownload.setText(UIUtil.getString(R.string.app_state_downloaded));
                 break;
             default:
                 break;
@@ -139,7 +139,7 @@ public class DetailDownloadHolder extends BaseHolder<AppBean> implements Downloa
     private void refreshOnMainThread(final DownloadBean info) {
         // 判断要刷新的下载对象是否是当前的应用
         if (info.getId() == mAppDetailBean.getId()) {
-            UIUtils.runOnUiThread(new Runnable() {
+            UIUtil.runOnUiThread(new Runnable() {
 
                 @Override
                 public void run() {

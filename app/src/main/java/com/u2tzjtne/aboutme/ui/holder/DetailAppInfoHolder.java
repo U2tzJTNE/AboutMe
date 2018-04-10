@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.bean.AppBean;
 import com.u2tzjtne.aboutme.http.HttpHelper;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 /**
  * 详情页-应用信息
@@ -27,7 +27,7 @@ public class DetailAppInfoHolder extends BaseHolder<AppBean> {
 
     @Override
     public View initView() {
-        View view = View.inflate(UIUtils.getContext(),
+        View view = View.inflate(UIUtil.getContext(),
                 R.layout.layout_detail_app_info, null);
         tvName = view.findViewById(R.id.detail_tv_name);
         tvDownloadNum = view.findViewById(R.id.tv_download_num);
@@ -41,11 +41,11 @@ public class DetailAppInfoHolder extends BaseHolder<AppBean> {
     public void refreshView(AppBean data) {
         if (data != null) {
             tvName.setText(data.getName());
-            tvSize.setText(Formatter.formatFileSize(UIUtils.getContext(),
+            tvSize.setText(Formatter.formatFileSize(UIUtil.getContext(),
                     data.getSize()));
             tvDownloadNum.setText(data.getDownloadNum());
             rbStar.setRating((float) data.getStars());
-            Glide.with(UIUtils.getContext())
+            Glide.with(UIUtil.getContext())
                     .load(HttpHelper.URL + "image?name=" + data.getIconUrl()).into(ivIcon);
         }
     }

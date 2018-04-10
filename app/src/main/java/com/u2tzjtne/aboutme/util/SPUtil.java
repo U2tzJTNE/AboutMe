@@ -11,7 +11,7 @@ import com.u2tzjtne.aboutme.MyApplication;
  * SharedPreferences工具类
  */
 
-public class SPUtils {
+public class SPUtil {
     private static Context context = MyApplication.getContext();
     private static SharedPreferences sp = context.getSharedPreferences("PassBox", Context.MODE_PRIVATE);
     private static SharedPreferences.Editor edit = sp.edit();

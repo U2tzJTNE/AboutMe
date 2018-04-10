@@ -14,7 +14,7 @@ import com.u2tzjtne.aboutme.MyApplication;
  * UI工具类
  */
 
-public class UIUtils {
+public class UIUtil {
     public static Context getContext() {
         return MyApplication.getContext();
     }

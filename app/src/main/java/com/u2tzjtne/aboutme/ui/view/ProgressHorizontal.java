@@ -15,8 +15,8 @@ import android.os.Process;
 import android.view.View;
 import android.widget.RemoteViews.RemoteView;
 
-import com.u2tzjtne.aboutme.util.StringUtils;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.StringUtil;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 
 @RemoteView
@@ -80,7 +80,7 @@ public class ProgressHorizontal extends View {
 		}
 		mResBackground = resId;
 		try {
-			mDrbBackground = UIUtils.getDrawable(resId);
+			mDrbBackground = UIUtil.getDrawable(resId);
 			if (null != mDrbBackground) {
 				mDrbBackground.setBounds(0, 0, getWidth(), getHeight());
 			}
@@ -103,7 +103,7 @@ public class ProgressHorizontal extends View {
 		if (mResProgress == resId) {
 			return;
 		}
-		mDrbProgress = UIUtils.getDrawable(resId);
+		mDrbProgress = UIUtil.getDrawable(resId);
 		invalidate();
 	}
 
@@ -267,7 +267,7 @@ public class ProgressHorizontal extends View {
 		// Draw progress text
 		if (mProgressTextVisible) {
 			mSb.delete(0, mSb.length());
-			if (StringUtils.isEmpty(mText)) {
+			if (StringUtil.isEmpty(mText)) {
 				mSb.append((int) (mSmoothProgress * 100));
 				mSb.append('%');
 			} else {

@@ -23,7 +23,7 @@ import com.u2tzjtne.aboutme.bean.MomentsBean;
 import com.u2tzjtne.aboutme.http.HttpHelper;
 import com.u2tzjtne.aboutme.ui.adapter.MomentsAdapter;
 import com.u2tzjtne.aboutme.ui.view.LoadMoreFooter;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -97,7 +97,7 @@ public class MomentsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                UIUtils.runOnUiThread(new Runnable() {
+                UIUtil.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         loadMoreFooter.setState(LoadMoreFooter.STATE_FAILED);
@@ -109,7 +109,7 @@ public class MomentsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 final ArrayList<MomentsBean> data = parseJson(response.body().string());
                 adapter.setItems(data);
-                UIUtils.runOnUiThread(new Runnable() {
+                UIUtil.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         adapter.notifyDataSetChanged();
@@ -139,7 +139,7 @@ public class MomentsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                UIUtils.runOnUiThread(new Runnable() {
+                UIUtil.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         loadMoreFooter.setState(LoadMoreFooter.STATE_FAILED);
@@ -153,7 +153,7 @@ public class MomentsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 final int startPos = adapter.getItemCount();
                 final int endPos = data.size();
                 adapter.addItems(data);
-                UIUtils.runOnUiThread(new Runnable() {
+                UIUtil.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         adapter.notifyItemRangeChanged(startPos, endPos);

@@ -18,7 +18,7 @@ import java.util.Properties;
  * 通用工具类
  */
 
-public class CommonUtils {
+public class CommonUtil {
     /**
      * 网络类型
      **/

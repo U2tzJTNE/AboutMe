@@ -23,9 +23,9 @@ import java.util.List;
  * @version 1.0
  * @date 2015-1-7
  **/
-public class PhotoUtils {
+public class PhotoUtil {
 
-    private final String tag = PhotoUtils.class.getSimpleName();
+    private final String tag = PhotoUtil.class.getSimpleName();
 
     /**
      * 裁剪图片成功后返回
@@ -48,7 +48,7 @@ public class PhotoUtils {
     private OnPhotoResultListener onPhotoResultListener;
 
 
-    public PhotoUtils(OnPhotoResultListener onPhotoResultListener) {
+    public PhotoUtil(OnPhotoResultListener onPhotoResultListener) {
         this.onPhotoResultListener = onPhotoResultListener;
     }
 
@@ -107,7 +107,7 @@ public class PhotoUtils {
      * @return
      */
     private Uri buildUri(Activity activity) {
-        if (CommonUtils.checkSDCard()) {
+        if (CommonUtil.checkSDCard()) {
             return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
         } else {
             System.out.println("---------------------------------------------------"+Uri.fromFile(activity.getCacheDir()).buildUpon().appendPath(CROP_FILE_NAME).build());

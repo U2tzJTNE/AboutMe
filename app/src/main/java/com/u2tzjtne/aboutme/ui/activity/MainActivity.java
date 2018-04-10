@@ -30,7 +30,8 @@ import com.u2tzjtne.aboutme.ui.fragment.BaseFragment;
 import com.u2tzjtne.aboutme.ui.fragment.MomentsFragment;
 import com.u2tzjtne.aboutme.ui.fragment.WebFragment;
 import com.u2tzjtne.aboutme.util.Const;
-import com.u2tzjtne.aboutme.util.SPUtils;
+import com.u2tzjtne.aboutme.util.LogUtil;
+import com.u2tzjtne.aboutme.util.SPUtil;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity
         //初始化主题
         initTheme();
         setContentView(R.layout.activity_main);
+        LogUtil.d("测试信息");
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fab = findViewById(R.id.action_button);
@@ -189,7 +191,7 @@ public class MainActivity extends AppCompatActivity
 
     //初始化主题
     private void initTheme() {
-        int themeType = SPUtils.getInt(Const.THEME_TYPE, 100);
+        int themeType = SPUtil.getInt(Const.THEME_TYPE, 100);
         switch (themeType) {
             case 100:
                 setTheme(R.style.AppTheme_Main);
@@ -395,27 +397,27 @@ public class MainActivity extends AppCompatActivity
         switch (view.getId()) {
             case R.id.checkBox0:
                 checkBox0.setChecked(true);
-                SPUtils.putInt(Const.THEME_TYPE, 100);
+                SPUtil.putInt(Const.THEME_TYPE, 100);
                 break;
             case R.id.checkBox1:
                 checkBox1.setChecked(true);
-                SPUtils.putInt(Const.THEME_TYPE, 101);
+                SPUtil.putInt(Const.THEME_TYPE, 101);
                 break;
             case R.id.checkBox2:
                 checkBox2.setChecked(true);
-                SPUtils.putInt(Const.THEME_TYPE, 102);
+                SPUtil.putInt(Const.THEME_TYPE, 102);
                 break;
             case R.id.checkBox3:
                 checkBox3.setChecked(true);
-                SPUtils.putInt(Const.THEME_TYPE, 103);
+                SPUtil.putInt(Const.THEME_TYPE, 103);
                 break;
             case R.id.checkBox4:
                 checkBox4.setChecked(true);
-                SPUtils.putInt(Const.THEME_TYPE, 104);
+                SPUtil.putInt(Const.THEME_TYPE, 104);
                 break;
             case R.id.checkBox5:
                 checkBox5.setChecked(true);
-                SPUtils.putInt(Const.THEME_TYPE, 105);
+                SPUtil.putInt(Const.THEME_TYPE, 105);
                 break;
         }
         dialog.dismiss();
@@ -423,7 +425,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void unSelect() {
-        int type = SPUtils.getInt(Const.THEME_TYPE, 100);
+        int type = SPUtil.getInt(Const.THEME_TYPE, 100);
         switch (type) {
             case 100:
                 checkBox0.setChecked(false);

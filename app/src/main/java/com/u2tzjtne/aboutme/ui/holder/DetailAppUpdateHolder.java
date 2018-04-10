@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.bean.AppBean;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 
 /**
@@ -29,7 +29,7 @@ public class DetailAppUpdateHolder extends BaseHolder<AppBean> {
 
     @Override
     public View initView() {
-        View view = View.inflate(UIUtils.getContext(),
+        View view = View.inflate(UIUtil.getContext(),
                 R.layout.layout_detail_update_info, null);
         tvDes = view.findViewById(R.id.tv_detail_update_des);
         ivArrow = view.findViewById(R.id.iv_detail_update_arrow);
@@ -148,7 +148,7 @@ public class DetailAppUpdateHolder extends BaseHolder<AppBean> {
         // 这里的2000是高度最大值, 也可以设置为屏幕高度
 
         // 模拟一个TextView
-        TextView view = new TextView(UIUtils.getContext());
+        TextView view = new TextView(UIUtil.getContext());
         view.setMaxLines(7);// 最多展示7行
         view.setText(getData().getDes());
         // tvDes得到的规则要作用在模拟的textView上,保持其高度一致
@@ -174,7 +174,7 @@ public class DetailAppUpdateHolder extends BaseHolder<AppBean> {
         // 这里的2000是高度最大值, 也可以设置为屏幕高度
 
         // 模拟一个TextView
-        TextView view = new TextView(UIUtils.getContext());
+        TextView view = new TextView(UIUtil.getContext());
         view.setText(getData().getDes());
         // tvDes得到的规则要作用在模拟的textView上,保持其高度一致
         view.measure(widthMeasureSpec, heightMeasureSpec);

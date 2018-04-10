@@ -12,8 +12,8 @@ import android.net.Uri;
 import com.u2tzjtne.aboutme.bean.AppBean;
 import com.u2tzjtne.aboutme.bean.DownloadBean;
 import com.u2tzjtne.aboutme.http.HttpHelper;
-import com.u2tzjtne.aboutme.util.IOUtils;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.IOUtil;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 
 /**
@@ -167,8 +167,8 @@ public class DownloadManager {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    IOUtils.close(in);
-                    IOUtils.close(out);
+                    IOUtil.close(in);
+                    IOUtil.close(out);
                 }
 
                 // 下载结束, 判断文件是否完整
@@ -238,7 +238,7 @@ public class DownloadManager {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setDataAndType(Uri.parse("file://" + downloadInfo.getPath()),
                     "application/vnd.android.package-archive");
-            UIUtils.getContext().startActivity(intent);
+            UIUtil.getContext().startActivity(intent);
         }
     }
 

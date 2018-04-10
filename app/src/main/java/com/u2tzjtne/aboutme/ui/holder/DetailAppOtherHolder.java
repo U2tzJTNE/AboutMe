@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.bean.AppBean;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 
 /**
@@ -21,7 +21,7 @@ public class DetailAppOtherHolder extends BaseHolder<AppBean> {
 
     @Override
     public View initView() {
-        View view = View.inflate(UIUtils.getContext(),
+        View view = View.inflate(UIUtil.getContext(),
                 R.layout.layout_detail_other_info, null);
         tvDeveloper = view.findViewById(R.id.tv_detail_other_developer_info);
         tvUpdateDate = view.findViewById(R.id.tv_detail_other_update_date_info);

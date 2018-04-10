@@ -6,14 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.bean.AppBean;
 import com.u2tzjtne.aboutme.http.HttpHelper;
 import com.u2tzjtne.aboutme.ui.activity.AppPictureDetailActivity;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 /**
  * 详情页-应用图片
@@ -27,8 +26,8 @@ public class DetailAppPicsHolder extends BaseHolder<AppBean> {
 
     @Override
     public View initView() {
-        context = UIUtils.getContext();
-        View view = View.inflate(UIUtils.getContext(),
+        context = UIUtil.getContext();
+        View view = View.inflate(UIUtil.getContext(),
                 R.layout.layout_detail_picture_info, null);
 
         mImageViews = new ImageView[5];
@@ -47,13 +46,13 @@ public class DetailAppPicsHolder extends BaseHolder<AppBean> {
             for (int i = 0; i < 5; i++) {
                 if (i < list.size()) {
                     mImageViews[i].setVisibility(View.VISIBLE);
-                    Glide.with(UIUtils.getContext())
+                    Glide.with(UIUtil.getContext())
                             .load(HttpHelper.URL + "image?name=" + list.get(i)).into(mImageViews[i]);
                     final int finalI = i;
                     mImageViews[i].setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            startActivity(UIUtils.getContext(), list, finalI);
+                            startActivity(UIUtil.getContext(), list, finalI);
                         }
                     });
                 } else {

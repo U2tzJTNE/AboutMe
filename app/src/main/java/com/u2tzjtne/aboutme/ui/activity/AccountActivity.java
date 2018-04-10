@@ -26,7 +26,7 @@ import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.bean.MyUser;
 import com.u2tzjtne.aboutme.model.UserModel;
 import com.u2tzjtne.aboutme.ui.view.LoadDialog;
-import com.u2tzjtne.aboutme.util.PhotoUtils;
+import com.u2tzjtne.aboutme.util.PhotoUtil;
 import com.u2tzjtne.aboutme.util.ValidUtil;
 
 
@@ -47,7 +47,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     private EditText editEmail;
     private RelativeLayout changePass;
     private Button logout;
-    private PhotoUtils photoUtils;
+    private PhotoUtil photoUtils;
     private Uri selectUri;
     private Context mContext;
 
@@ -83,9 +83,9 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case PhotoUtils.INTENT_CROP:
-            case PhotoUtils.INTENT_TAKE:
-            case PhotoUtils.INTENT_SELECT:
+            case PhotoUtil.INTENT_CROP:
+            case PhotoUtil.INTENT_TAKE:
+            case PhotoUtil.INTENT_SELECT:
                 photoUtils.onActivityResult(AccountActivity.this, requestCode, resultCode, data);
                 break;
         }
@@ -302,7 +302,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
     //裁剪后返回
     private void setPortraitChangeListener() {
-        photoUtils = new PhotoUtils(new PhotoUtils.OnPhotoResultListener() {
+        photoUtils = new PhotoUtil(new PhotoUtil.OnPhotoResultListener() {
             @Override
             public void onPhotoResult(Uri uri) {
                 System.out.println("-----------onPhotoResult--------------" + uri);

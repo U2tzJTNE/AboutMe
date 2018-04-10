@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 
 import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.manager.ThreadManager;
-import com.u2tzjtne.aboutme.util.UIUtils;
+import com.u2tzjtne.aboutme.util.UIUtil;
 
 
 /**
@@ -109,21 +109,21 @@ public abstract class LoadingPage extends FrameLayout {
      * 初始化正在加载布局
      */
     private View onCreateLoadingView() {
-        return UIUtils.inflate(R.layout.layout_loading);
+        return UIUtil.inflate(R.layout.layout_loading);
     }
 
     /**
      * 初始化加载失败布局
      */
     private View onCreateErrorView() {
-        return UIUtils.inflate(R.layout.layout_error);
+        return UIUtil.inflate(R.layout.layout_error);
     }
 
     /**
      * 初始化数据为空布局
      */
     private View onCreateEmptyView() {
-        return UIUtils.inflate(R.layout.layout_empty);
+        return UIUtil.inflate(R.layout.layout_empty);
     }
 
     /**
@@ -150,7 +150,7 @@ public abstract class LoadingPage extends FrameLayout {
                     // 开始加载网络数据
                     final ResultState state = onLoad();
                     // 必须在主线程更新界面
-                    UIUtils.runOnUiThread(new Runnable() {
+                    UIUtil.runOnUiThread(new Runnable() {
 
                         @Override
                         public void run() {

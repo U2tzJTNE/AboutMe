@@ -1,9 +1,9 @@
 package com.u2tzjtne.aboutme.http;
 
 import com.u2tzjtne.aboutme.util.Const;
-import com.u2tzjtne.aboutme.util.IOUtils;
-import com.u2tzjtne.aboutme.util.LogUtils;
-import com.u2tzjtne.aboutme.util.StringUtils;
+import com.u2tzjtne.aboutme.util.IOUtil;
+import com.u2tzjtne.aboutme.util.LogUtil;
+import com.u2tzjtne.aboutme.util.StringUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,7 +17,6 @@ import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
@@ -74,7 +73,7 @@ public class HttpHelper {
             } catch (Exception e) {
                 IOException ioException = new IOException(e.getMessage());
                 retry = retryHandler.retryRequest(ioException, ++retryCount, httpContext);//把错误异常交给重试机制，以判断是否需要采取从事
-                LogUtils.e(e);
+                LogUtil.e(e);
             }
         }
         return null;
@@ -105,7 +104,7 @@ public class HttpHelper {
          * 从结果中获取字符串，一旦获取，会自动关流，并且把字符串保存，方便下次获取
          */
         public String getString() {
-            if (!StringUtils.isEmpty(mStr)) {
+            if (!StringUtil.isEmpty(mStr)) {
                 return mStr;
             }
             InputStream inputStream = getInputStream();
@@ -121,9 +120,9 @@ public class HttpHelper {
                     byte[] data = out.toByteArray();
                     mStr = new String(data, "utf-8");
                 } catch (Exception e) {
-                    LogUtils.e(e);
+                    LogUtil.e(e);
                 } finally {
-                    IOUtils.close(out);
+                    IOUtil.close(out);
                     close();
                 }
             }
@@ -139,7 +138,7 @@ public class HttpHelper {
                 try {
                     mIn = entity.getContent();
                 } catch (Exception e) {
-                    LogUtils.e(e);
+                    LogUtil.e(e);
                 }
             }
             return mIn;
@@ -152,7 +151,7 @@ public class HttpHelper {
             if (mRequestBase != null) {
                 mRequestBase.abort();
             }
-            IOUtils.close(mIn);
+            IOUtil.close(mIn);
             if (mHttpClient != null) {
                 mHttpClient.getConnectionManager().closeExpiredConnections();
             }
