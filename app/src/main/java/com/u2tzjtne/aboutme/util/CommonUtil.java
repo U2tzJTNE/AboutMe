@@ -87,14 +87,4 @@ public class CommonUtil {
         return netType;
     }
 
-
-    /**
-     * 判断SDCard是否存在,并可写
-     *
-     * @return
-     */
-    public static boolean checkSDCard() {
-        String flag = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(flag);
-    }
 }

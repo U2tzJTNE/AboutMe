@@ -2,6 +2,8 @@ package com.u2tzjtne.aboutme.model;
 
 
 import com.u2tzjtne.aboutme.bean.MyUser;
+import com.u2tzjtne.aboutme.util.Const;
+import com.u2tzjtne.aboutme.util.SPUtil;
 
 import cn.bmob.v3.BmobUser;
 
@@ -25,6 +27,9 @@ public class UserModel {
      */
     public void logout() {
         BmobUser.logOut();
+        SPUtil.putBoolean(Const.IS_LOGIN, false);
+        SPUtil.putString(Const.USER_EMAIL, "");
+        SPUtil.putString(Const.USER_PASSWORD, "");
     }
 
     //当前缓存的用户

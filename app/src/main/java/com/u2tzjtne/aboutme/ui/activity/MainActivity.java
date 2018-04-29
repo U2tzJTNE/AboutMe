@@ -377,16 +377,14 @@ public class MainActivity extends AppCompatActivity
                 nv_header_nickname.setText(nickname);
             }
             if (avatarURL != null) {
-                //TODO 加载图片
-//                ImageOptions.Builder builder = new ImageOptions.Builder();
-//                builder.setPlaceholderScaleType(ImageView.ScaleType.CENTER_CROP);
-//                ImageOptions options = builder.build();
-//                x.image().bind(nv_header_avatar, avatarURL, options);
                 Glide.with(MainActivity.this).load(avatarURL).into(nv_header_avatar);
             } else {
-                //TODO 默认头像
                 nv_header_avatar.setImageResource(R.drawable.splash);
             }
+        } else {
+            nv_header_email.setText("");
+            nv_header_nickname.setText("点击登录");
+            nv_header_avatar.setImageResource(R.drawable.splash);
         }
     }
 

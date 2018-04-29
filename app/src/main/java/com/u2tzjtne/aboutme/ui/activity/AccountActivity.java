@@ -1,24 +1,21 @@
 package com.u2tzjtne.aboutme.ui.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -26,95 +23,86 @@ import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.bean.MyUser;
 import com.u2tzjtne.aboutme.model.UserModel;
 import com.u2tzjtne.aboutme.ui.view.LoadDialog;
-import com.u2tzjtne.aboutme.util.PhotoUtil;
-import com.u2tzjtne.aboutme.util.ValidUtil;
+import com.u2tzjtne.aboutme.util.Const;
+import com.u2tzjtne.aboutme.util.FileUtil;
+import com.u2tzjtne.aboutme.util.ImageUtil;
+import com.u2tzjtne.aboutme.util.LogUtil;
 
 
 import java.io.File;
+import java.util.List;
 
-import cn.bmob.v3.BmobUser;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
-import de.hdodenhof.circleimageview.CircleImageView;
+import me.nereo.multi_image_selector.MultiImageSelector;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+import me.nereo.multi_image_selector.utils.FileUtils;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
 
-public class AccountActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private CircleImageView avatar;
-    private Button edit;
-    private EditText editNickname;
-    private EditText editEmail;
-    private RelativeLayout changePass;
-    private Button logout;
-    private PhotoUtil photoUtils;
-    private Uri selectUri;
-    private Context mContext;
+@RuntimePermissions
+public class AccountActivity extends AppCompatActivity {
 
 
-    private boolean isEdit = false;
-    public static final int REQUEST_PERMISSIONS_CAMERA = 101;
-    public static final int REQUEST_PERMISSIONS_GALLERY = 102;
+    @BindView(R.id.account_activity_avatar)
+    ImageView userAvatar;
+    @BindView(R.id.item_avatar)
+    LinearLayout itemAvatar;
+    @BindView(R.id.account_activity_nickname)
+    TextView userNickname;
+    @BindView(R.id.item_nickname)
+    LinearLayout itemNickname;
+    @BindView(R.id.account_activity_email)
+    TextView userEmail;
+    @BindView(R.id.item_email)
+    LinearLayout itemEmail;
+    @BindView(R.id.item_update_pass)
+    LinearLayout itemUpdatePass;
+    @BindView(R.id.btn_logout)
+    Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mContext = this;
-        initView();
-        setPortraitChangeListener();
     }
 
-    private void initView() {
-        avatar = findViewById(R.id.avatar);
-        edit = findViewById(R.id.btn_edit);
-        editNickname = findViewById(R.id.edit_nickname);
-        editEmail = findViewById(R.id.edit_email);
-        changePass = findViewById(R.id.change_password);
-        logout = findViewById(R.id.btn_logout);
-
-        avatar.setOnClickListener(this);
-        edit.setOnClickListener(this);
-        changePass.setOnClickListener(this);
-        logout.setOnClickListener(this);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case PhotoUtil.INTENT_CROP:
-            case PhotoUtil.INTENT_TAKE:
-            case PhotoUtil.INTENT_SELECT:
-                photoUtils.onActivityResult(AccountActivity.this, requestCode, resultCode, data);
+    @OnClick({R.id.item_avatar, R.id.item_nickname, R.id.item_email, R.id.item_update_pass, R.id.btn_logout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.item_avatar://头像
+                AccountActivityPermissionsDispatcher.showImageSelectorWithPermissionCheck(AccountActivity.this);
                 break;
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MyUser user = UserModel.getInstance().getCurrentUser();
-        if (user != null) {
-            String email = user.getEmail();
-            String nickname = user.getNickname();
-            String avatarURL = user.getAvatarURL();
-            if (email != null) {
-                editEmail.setText(email);
-            }
-            if (nickname != null) {
-                editNickname.setText(nickname);
-            }
-            if (avatarURL != null) {
-//                ImageOptions.Builder builder = new ImageOptions.Builder();
-//                builder.setPlaceholderScaleType(ImageView.ScaleType.CENTER_CROP);
-//                ImageOptions options = builder.build();
-//                x.image().bind(avatar, avatarURL, options);
-                Glide.with(AccountActivity.this).load(avatarURL).into(avatar);
-            } else {
-                //TODO 默认头像
-                avatar.setImageResource(R.drawable.splash);
-            }
+            case R.id.item_nickname://昵称
+                Intent nicknameIntent = new Intent(AccountActivity.this, UpdateAccountInfoActivity.class);
+                nicknameIntent.putExtra(Const.UPDATE_ACCOUNT_INFO_TYPE, Const.REQUEST_CODE_NICKNAME);
+                startActivity(nicknameIntent);
+                break;
+            case R.id.item_email://邮箱
+                Intent emailIntent = new Intent(AccountActivity.this, UpdateAccountInfoActivity.class);
+                emailIntent.putExtra(Const.UPDATE_ACCOUNT_INFO_TYPE, Const.REQUEST_CODE_EMAIL);
+                startActivity(emailIntent);
+                break;
+            case R.id.item_update_pass://更改密码
+                Intent passwordIntent = new Intent(AccountActivity.this, UpdateAccountInfoActivity.class);
+                passwordIntent.putExtra(Const.UPDATE_ACCOUNT_INFO_TYPE, Const.REQUEST_CODE_PASSWORD);
+                startActivity(passwordIntent);
+                break;
+            case R.id.btn_logout://退出登录
+                UserModel.getInstance().logout();
+                finish();
+                break;
         }
     }
 
@@ -128,257 +116,219 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.avatar: //修改头像
-                showDialog();
-                break;
-            case R.id.btn_edit://修改资料
-                if (isEdit) {
-                    //判断是否修改
-                    //获取输入框的值
-                    String email = editEmail.getText().toString().trim();
-                    String nickname = editNickname.getText().toString().trim();
 
-                    MyUser user = UserModel.getInstance().getCurrentUser();
-                    String oldNickname = user.getNickname();
-                    String oldEmail = user.getEmail();
-                    boolean isSubmit = false;
-                    //待提交的信息
-                    String[] infos = new String[]{null, null, null};
-                    //邮件相等
-                    if (!email.equals(oldEmail) && ValidUtil.isEmailValid(email)) {
-                        infos[1] = email;
-                        isSubmit = true;
-                    }
-                    //昵称相等
-                    if (!nickname.equals(oldNickname) && ValidUtil.isNicknameValid(nickname)) {
-                        infos[0] = nickname;
-                        isSubmit = true;
-                    }
-
-                    //当前状态为可提交
-                    if (isSubmit) {
-                        boolean succeed = updateAccountInfo(infos);
-                        if (!succeed) {
-                            editEmail.setText(oldEmail);
-                            editNickname.setText(oldNickname);
-                        }
-                    }
-                }
-                isEdit = !isEdit;
-                editEmail.setEnabled(isEdit);
-                editNickname.setEnabled(isEdit);
-                edit.setText(isEdit ? "保存修改" : "编辑资料");
-                break;
-            case R.id.change_password://修改密码
-                startActivity(new Intent(AccountActivity.this, UpdatePasswordActivity.class));
-                break;
-            case R.id.btn_logout://退出登录
-                UserModel.getInstance().logout();
-                startActivity(new Intent(AccountActivity.this, MainActivity.class));
-                finish();
-                break;
-        }
+    /**
+     * 选择图片
+     */
+    @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void showImageSelector() {
+        MultiImageSelector.create()
+                .showCamera(true)
+                .single()
+                .start(AccountActivity.this, Const.REQUEST_IMAGE);
     }
 
-
-    private void showDialog() {
-        String[] items = new String[]{"相册", "拍照"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case 0://相册
-                        int storage1 = ContextCompat.checkSelfPermission(AccountActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                        if (storage1 != PackageManager.PERMISSION_GRANTED) {
-                            //获取权限
-                            if (Build.VERSION.SDK_INT >= 23) {
-                                getPermission(REQUEST_PERMISSIONS_GALLERY);
-                            } else {
-                                Toast.makeText(mContext, "请去设置里面打开存储权限", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            photoUtils.selectPicture(AccountActivity.this);
-                        }
-                        break;
-                    case 1://拍照
-                        int camera = ContextCompat.checkSelfPermission(AccountActivity.this, Manifest.permission.CAMERA);
-                        int storage = ContextCompat.checkSelfPermission(AccountActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                        if (camera != PackageManager.PERMISSION_GRANTED || storage != PackageManager.PERMISSION_GRANTED) {
-                            //获取权限
-                            if (Build.VERSION.SDK_INT >= 23) {
-                                getPermission(REQUEST_PERMISSIONS_CAMERA);
-                            } else {
-                                Toast.makeText(mContext, "请去设置里面打开相机和存储权限", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            photoUtils.takePicture(AccountActivity.this);
-                        }
-                        break;
-                }
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+    /**
+     * 向用户解释为什么需要调用该权限
+     * <p>
+     * 只有当第一次请求权限被用户拒绝，下次请求权限之前会调用
+     */
+    @OnShowRationale({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void showRationale(final PermissionRequest request) {
+        new AlertDialog.Builder(this)
+                .setMessage("拍照上传需要您提供存储权限和相机权限")
+                .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        request.proceed();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        request.cancel();
+                    }
+                }).show();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void getPermission(final int requestCode) {
-        switch (requestCode) {
-            case REQUEST_PERMISSIONS_CAMERA:
-                //之前拒绝过
-                if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)
-                        || shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    //向用户解释
-                    new AlertDialog.Builder(mContext)
-                            .setMessage("您需要在设置里打开相机和存储权限")
-                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                                @RequiresApi(api = Build.VERSION_CODES.M)
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    requestPermissions(new String[]{Manifest.permission.CAMERA,
-                                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
-                                }
-                            })
-                            .setNegativeButton("取消", null)
-                            .create().show();
-                } else {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
-                }
-                break;
-            case REQUEST_PERMISSIONS_GALLERY://只获取存储权限
-                //之前拒绝过
-                if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    //向用户解释
-                    new AlertDialog.Builder(mContext)
-                            .setMessage("您需要在设置里打开外置存储权限")
-                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                                @RequiresApi(api = Build.VERSION_CODES.M)
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
-                                }
-                            })
-                            .setNegativeButton("取消", null)
-                            .create().show();
-
-                } else {
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
-                }
-                break;
-        }
+    /* *
+     *  当用户拒绝权限申请
+     * */
+    @OnPermissionDenied({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void onPermissionDenied() {
 
     }
+
+    /*
+     * 当用户选中了授权窗口中的不再询问复选框后并拒绝了权限请求时需要调用的方法
+     * */
+    @OnNeverAskAgain({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void showNeverAsk() {
+        showPermissionMessage("抱歉，您没有打开相机或外部存储权限！", true);
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_PERMISSIONS_CAMERA:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                        grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    //允许  开始调用相机
-                    photoUtils.takePicture(AccountActivity.this);
-                } else {
-                    // 拒绝
-                    Toast.makeText(AccountActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case REQUEST_PERMISSIONS_GALLERY:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //允许  开始调用相册
-                    photoUtils.selectPicture(AccountActivity.this);
-                } else {
-                    // 拒绝
-                    Toast.makeText(AccountActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        AccountActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
-    //裁剪后返回
-    private void setPortraitChangeListener() {
-        photoUtils = new PhotoUtil(new PhotoUtil.OnPhotoResultListener() {
-            @Override
-            public void onPhotoResult(Uri uri) {
-                System.out.println("-----------onPhotoResult--------------" + uri);
-                if (uri != null && !TextUtils.isEmpty(uri.getPath())) {
-                    selectUri = uri;
-                    //显示加载
-                    LoadDialog.show(mContext);
-                    System.out.println("-----------开始创建BmobFile--------------");
-                    final BmobFile bmobFile = new BmobFile(new File(uri.getPath()));
-                    System.out.println("-----------创建完成--------------");
-
-                    //TODO 上传出错
-                    bmobFile.uploadblock(new UploadFileListener() {
-                        @Override
-                        public void done(BmobException e) {
-                            //上传失败
-                            LoadDialog.dismiss(mContext);
-                            if (e == null) {
-                                System.out.println("-----------上传成功--------------");
-                                //上传成功后更新头像链接
-                                updateAccountInfo(new String[]{null, null, bmobFile.getFileUrl()});
-                            } else {
-                                Toast.makeText(mContext, "上传失败:" + e.getErrorCode(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onPhotoCancel() {
-
-            }
-        });
-    }
-
-    //更新资料
-    private boolean updateAccountInfo(String[] items) {
-        System.out.println("---------------------------进入更新信息---------------");
-        final boolean[] succeed = {false};
-        String nickname = items[0];
-        final String email = items[1];
-        String avatarURL = items[2];
-        LoadDialog.show(AccountActivity.this);
-        BmobUser user = UserModel.getInstance().getCurrentUser();
-        MyUser myUser = new MyUser();
-        if (nickname != null) {
-            myUser.setNickname(nickname);
-        }
-        if (email != null) {
-            myUser.setEmail(email);
-        }
-        if (avatarURL != null) {
-            myUser.setAvatarURL(avatarURL);
-        }
-        myUser.update(user.getObjectId(), new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                System.out.println("----------------------更新完成-----------------");
-                LoadDialog.dismiss(AccountActivity.this);
-                if (e == null) {
-                    if (email != null) {
-                        UserModel.getInstance().logout();
-                        Toast.makeText(AccountActivity.this, "更新成功,请验证后登录", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AccountActivity.this, LoginActivity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(AccountActivity.this, "更新成功", Toast.LENGTH_SHORT).show();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Const.REQUEST_IMAGE) {//选取照片后
+                if (data != null) {
+                    List<String> urls = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                    if (urls.size() > 0) {
+                        LogUtil.d(urls.toString());
+                        ImageUtil.startPhotoZoom(AccountActivity.this, new File(urls.get(0)));
                     }
-                    succeed[0] = true;
-                } else {
-                    succeed[0] = false;
-                    Toast.makeText(AccountActivity.this, "更新失败,代码：" + e.getErrorCode(), Toast.LENGTH_SHORT).show();
+                }
+
+            } else if (requestCode == Const.REQUEST_CODE_EDITPIC) {//裁剪后
+                saveImage(data);
+            }
+        }
+    }
+
+    /**
+     * 保存裁剪之后的图片数据
+     *
+     * @param data
+     */
+    private void saveImage(Intent data) {
+        String facePath = "";
+        Bundle extras = data.getExtras();
+        if (extras != null) {
+            Bitmap m_bitmap = extras.getParcelable("data");
+            try {
+                String path = FileUtil.initPath();
+                File file = new File(path);
+                if (!file.exists()) {
+                    file.mkdir();
+                }
+                facePath = path + "picture_" + System.currentTimeMillis() + ".jpg";
+                File file2 = new File(facePath);
+                if (file2.exists()) {
+                    file2.delete();
+                }
+                // 图片保存到本地
+                FileUtil.saveBitmapWithPath(m_bitmap, facePath);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (m_bitmap != null) {
+                System.gc();
+                File mTmpFile = new File(facePath);
+                //上传头像
+                LoadDialog.show(AccountActivity.this);
+                uploadAvatar(mTmpFile);
+                // 回收
+                m_bitmap.recycle();
+                System.gc();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyUser user = UserModel.getInstance().getCurrentUser();
+        if (!TextUtils.isEmpty(user.getNickname())) {
+            userNickname.setText(user.getNickname());
+        }
+        if (!TextUtils.isEmpty(user.getEmail())) {
+            userEmail.setText(user.getEmail());
+        }
+        if (!TextUtils.isEmpty(user.getAvatarURL())) {
+            Glide.with(AccountActivity.this).load(user.getAvatarURL()).into(userAvatar);
+        }
+    }
+
+    //上传头像
+    private void uploadAvatar(File file) {
+        if (file.exists()) {
+            final BmobFile bmobFile = new BmobFile(file);
+            bmobFile.uploadblock(new UploadFileListener() {
+                @Override
+                public void done(BmobException e) {
+                    if (e == null) {
+                        //上传成功
+                        updateAvatar(bmobFile.getFileUrl());
+                    } else {
+                        LoadDialog.dismiss(AccountActivity.this);
+                        LogUtil.d("头像上传失败:" + e.toString());
+                        Toast.makeText(AccountActivity.this, "头像上传失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+
+    //更新头像
+    private void updateAvatar(final String avatarUrl) {
+        if (!TextUtils.isEmpty(avatarUrl)) {
+            MyUser myUser = UserModel.getInstance().getCurrentUser();
+            myUser.setAvatarURL(avatarUrl);
+            myUser.update(myUser.getObjectId(), new UpdateListener() {
+                @Override
+                public void done(BmobException e) {
+                    LoadDialog.dismiss(AccountActivity.this);
+                    if (e != null) {
+                        LogUtil.d("头像更新失败:" + e.toString());
+                        Toast.makeText(AccountActivity.this, "头像更新失败", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Glide.with(AccountActivity.this).load(avatarUrl).into(userAvatar);
+                    }
+                }
+            });
+        } else {
+            LogUtil.d("获取头像url出错");
+            Toast.makeText(this, "获取头像url出错", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    /**
+     * 没打开权限
+     * 跳转到app设置页面
+     */
+    public void showPermissionMessage(String message, final boolean isFinish) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage(message);
+        builder.setPositiveButton("去打开", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent localIntent = new Intent();
+                localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                localIntent.setData(Uri.fromParts("package", getPackageName(), null));
+                try {
+                    startActivity(localIntent);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
-        return succeed[0];
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (isFinish) {
+                    finish();
+                }
+            }
+        });
+        alert.show();
     }
 }

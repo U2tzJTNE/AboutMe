@@ -140,7 +140,6 @@ public class DownloadManager {
                 httpResult = HttpHelper.download(HttpHelper.URL
                         + "download?name=" + downloadInfo.getDownloadUrl());// 从头开始下载文件
             } else {
-                System.out.println("---------------------------断点续传--------------" + file.length());
                 // 需要断点续传
                 httpResult = HttpHelper.download(HttpHelper.URL
                         + "download?name=" + downloadInfo.getDownloadUrl()

@@ -37,7 +37,8 @@ public class GuideActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                int colorUpdate = (Integer) new ArgbEvaluator().evaluate(positionOffset, bgColors[position], bgColors[position == 2 ? position : position + 1]);
+                int colorUpdate = (Integer) new ArgbEvaluator().evaluate(positionOffset,
+                        bgColors[position], bgColors[position == 2 ? position : position + 1]);
                 viewPager.setBackgroundColor(colorUpdate);
             }
 
@@ -108,7 +109,8 @@ public class GuideActivity extends AppCompatActivity {
     private void updateIndicators(int position) {
         for (int i = 0; i < indicators.length; i++) {
             indicators[i].setBackgroundResource(
-                    i == position ? R.drawable.guide_indicator_selected : R.drawable.guide_indicator_unselected
+                    i == position ? R.drawable.guide_indicator_selected
+                            : R.drawable.guide_indicator_unselected
             );
         }
     }

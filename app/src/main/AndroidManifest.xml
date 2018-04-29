@@ -49,7 +49,7 @@
         <activity
             android:name=".ui.activity.AboutActivity"
             android:label="@string/title_activity_about_me"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.About" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:label="@string/title_activity_login" />
@@ -62,9 +62,6 @@
         <activity
             android:name=".ui.activity.AccountActivity"
             android:label="@string/title_activity_account" />
-        <activity
-            android:name=".ui.activity.UpdatePasswordActivity"
-            android:label="@string/title_activity_update_password" />
         <activity
             android:name=".ui.activity.AppDetailActivity"
             android:label="@string/title_activity_app_detail" />
@@ -85,6 +82,7 @@
             android:name=".ui.activity.AppPictureDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activity.UpdateAccountInfoActivity" />
     </application>
 
 </manifest>

@@ -30,6 +30,7 @@ import com.u2tzjtne.aboutme.http.HttpHelper;
 import com.u2tzjtne.aboutme.http.Interceptor.ProgressInterceptor;
 import com.u2tzjtne.aboutme.http.ProgressListener;
 import com.u2tzjtne.aboutme.util.Const;
+import com.u2tzjtne.aboutme.util.LogUtil;
 import com.u2tzjtne.aboutme.util.SPUtil;
 
 import java.io.File;
@@ -42,11 +43,17 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
 
+@RuntimePermissions
 public class SplashActivity extends AppCompatActivity {
 
     private long startTimeMillis;// 记录开始访问网络的时间
-    private static final int SD_PERMISSIONS = 4;//存储权限
 
     //下载进度
     private ProgressDialog progressDialog;
@@ -100,13 +107,7 @@ public class SplashActivity extends AppCompatActivity {
         if (SPUtil.getBoolean(Const.IS_CHECK_UPDATE, true)) {
             checkUpdate();//检查更新
         } else {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    loadMain();
-                }
-            }, 1000);
+            loadMain();
         }
 
     }
@@ -120,7 +121,6 @@ public class SplashActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         if (packageInfo != null) {
-            System.out.println("------------------version----------" + packageInfo.versionCode);
             return packageInfo.versionCode;
         }
         return 0;
@@ -209,17 +209,7 @@ public class SplashActivity extends AppCompatActivity {
             builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    //先请求权限
-                    if (ContextCompat.checkSelfPermission(SplashActivity.this,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(SplashActivity.this,
-                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, SD_PERMISSIONS);
-                    } else {
-                        //调用DownloadManager下载
-                        downloadAPkWithDownloadManager();
-                        loadMain();
-                    }
+                    SplashActivityPermissionsDispatcher.downloadAPKWithPermissionCheck(SplashActivity.this, bean.isIsForcedUpdate());
                 }
             });
         }
@@ -227,8 +217,108 @@ public class SplashActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    void downloadAPK(boolean isForcedUpdate) {
+        if (isForcedUpdate) {
+            downloadAPKWithProgressDialog();
+        } else {
+            downloadAPkWithDownloadManager();
+        }
+    }
+
+    /**
+     * 向用户解释为什么需要调用该权限
+     * <p>
+     * 只有当第一次请求权限被用户拒绝，下次请求权限之前会调用
+     */
+    @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    void showRationale(final PermissionRequest request) {
+        new AlertDialog.Builder(this)
+                .setMessage("应用更新需要您提供存储权限")
+                .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        request.proceed();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        request.cancel();
+                    }
+                }).show();
+    }
+
+    /* *
+     *  当用户拒绝权限申请
+     * */
+    @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    void onPermissionDenied() {
+        if (bean.isIsForcedUpdate()) {
+            finish();
+        } else {
+            loadMain();
+        }
+    }
+
+    /*
+     * 当用户选中了授权窗口中的不再询问复选框后并拒绝了权限请求时需要调用的方法
+     * */
+    @OnNeverAskAgain(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    void showNeverAsk() {
+        showPermissionMessage("抱歉，您没有打开外部存储权限！", true);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        SplashActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
+
+
+    /**
+     * 没打开权限
+     * 跳转到app设置页面
+     */
+    public void showPermissionMessage(String message, final boolean isFinish) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage(message);
+        builder.setPositiveButton("去打开", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent localIntent = new Intent();
+                localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                localIntent.setData(Uri.fromParts("package", getPackageName(), null));
+                try {
+                    startActivity(localIntent);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (isFinish) {
+                    finish();
+                }
+            }
+        });
+        alert.show();
+    }
+
     private void downloadAPKWithProgressDialog() {
-        final String TAG = "ProgressDialog:";
         final String url = bean.getApkUrl();//下载地址
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -242,16 +332,17 @@ public class SplashActivity extends AppCompatActivity {
         });
 
         final String path = Environment.getExternalStorageDirectory().getPath() + "/AboutMe.apk";
-        Log.d(TAG, path);
+        LogUtil.d(path);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new ProgressInterceptor()).build();
         Request request = new Request.Builder().url(url).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d(TAG, e.toString());
+                LogUtil.d(e.toString());
                 progressDialog.dismiss();
                 ProgressInterceptor.removeListener(url);
+                //出现异常  进入主页
                 loadMain();
             }
 
@@ -268,22 +359,25 @@ public class SplashActivity extends AppCompatActivity {
                     }
                     fileOutputStream.flush();
                 } catch (IOException e) {
-                    Log.i(TAG, "IOException");
+                    LogUtil.i(e.toString());
                     e.printStackTrace();
                     progressDialog.dismiss();
                     ProgressInterceptor.removeListener(url);
+                    //出现异常  进入主页
                     loadMain();
                 }
                 progressDialog.dismiss();
                 ProgressInterceptor.removeListener(url);
+                //安装apk
                 installAPK(path);
             }
         });
 
     }
 
+    //安装apk
     private void installAPK(String path) {
-        //安装apk
+
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setDataAndType(Uri.fromFile(new File(path)),
@@ -306,7 +400,8 @@ public class SplashActivity extends AppCompatActivity {
         // 设置下载文件存放的路径，同样你可以选择以下方法存放在你想要的位置。
         // setDestinationUri
         // setDestinationInExternalPublicDir
-        req.setDestinationInExternalFilesDir(this, Environment.getExternalStorageDirectory().getPath(), "AboutMe.apk");
+        req.setDestinationInExternalFilesDir(SplashActivity.this,
+                Environment.getExternalStorageDirectory().getPath(), "AboutMe.apk");
 
         // 设置一些基本显示信息
         req.setTitle("AboutMe.apk");
@@ -316,29 +411,9 @@ public class SplashActivity extends AppCompatActivity {
         // Ok go!
         DownloadManager dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         if (dm != null) {
-            long downloadId = dm.enqueue(req);
+            dm.enqueue(req);
         }
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == SD_PERMISSIONS) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (bean.isIsForcedUpdate()) {
-                    downloadAPKWithProgressDialog();
-                } else {
-                    downloadAPkWithDownloadManager();
-                    loadMain();
-                }
-            } else {
-                // Permission Denied
-                Toast.makeText(SplashActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                loadMain();
-            }
-            return;
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        loadMain();
     }
 
     //屏蔽返回键
