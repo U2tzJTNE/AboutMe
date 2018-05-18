@@ -9,6 +9,7 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import com.u2tzjtne.aboutme.BuildConfig;
+import com.u2tzjtne.aboutme.constant.Constant;
 
 import java.io.File;
 
@@ -26,7 +27,8 @@ public class ImageUtil {
             Log.i("TAG", "Android7.0以上版本的手机");
             //添加这一句表示对目标应用临时授权该Uri所代表的文件
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            uri = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".fileprovider", mTmpFile);
+            uri = FileProvider.getUriForFile(mContext,
+                    BuildConfig.APPLICATION_ID + ".fileprovider", mTmpFile);
         } else {
             uri = Uri.fromFile(mTmpFile);
         }
@@ -42,6 +44,6 @@ public class ImageUtil {
         intent.putExtra("scale", true);
         intent.putExtra("scaleUpIfNeeded", true);
         intent.putExtra("return-data", true);
-        ((Activity) mContext).startActivityForResult(intent, Const.REQUEST_CODE_EDITPIC);
+        ((Activity) mContext).startActivityForResult(intent, Constant.REQUEST_CODE_EDITPIC);
     }
 }

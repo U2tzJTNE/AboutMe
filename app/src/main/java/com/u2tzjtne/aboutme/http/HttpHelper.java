@@ -1,6 +1,7 @@
 package com.u2tzjtne.aboutme.http;
 
-import com.u2tzjtne.aboutme.util.Const;
+import com.u2tzjtne.aboutme.constant.Constant;
+import com.u2tzjtne.aboutme.constant.Url;
 import com.u2tzjtne.aboutme.util.IOUtil;
 import com.u2tzjtne.aboutme.util.LogUtil;
 import com.u2tzjtne.aboutme.util.StringUtil;
@@ -26,7 +27,7 @@ import org.apache.http.protocol.SyncBasicHttpContext;
 
 public class HttpHelper {
 
-    public static final String URL = Const.SERVER_URL;
+    public static final String URL = Url.SERVER_URL;
 
     /**
      * get请求，获取返回字符串内容

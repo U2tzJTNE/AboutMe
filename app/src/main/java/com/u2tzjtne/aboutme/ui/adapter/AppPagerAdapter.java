@@ -76,7 +76,9 @@ public class AppPagerAdapter extends RecyclerView.Adapter<AppPagerAdapter.AppHol
     public void onBindViewHolder(final AppHolder holder, int position) {
 
         mHolder = holder;
-        Animation animation = AnimationUtils.loadAnimation(context, R.anim.anim_recycler_item_show);
+
+        Animation animation = AnimationUtils.loadAnimation(context,
+                R.anim.anim_recycler_item_show);
         holder.mView.startAnimation(animation);
 
         AlphaAnimation aa1 = new AlphaAnimation(1.0f, 0.1f);

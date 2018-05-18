@@ -77,12 +77,15 @@
             android:value="26.1.0"
             tools:replace="android:value" />
 
-        <activity android:name=".ui.activity.MomentsDetailActivity" />
+        <activity
+            android:name=".ui.activity.MomentsDetailActivity"
+            android:label="@string/nav_title_moments_detail" />
         <activity
             android:name=".ui.activity.AppPictureDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.activity.UpdateAccountInfoActivity" />
+        <activity android:name=".ui.activity.WebActivity"></activity>
     </application>
 
 </manifest>

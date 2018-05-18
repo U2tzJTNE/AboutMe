@@ -16,17 +16,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.bean.MyUser;
+import com.u2tzjtne.aboutme.constant.Constant;
 import com.u2tzjtne.aboutme.model.UserModel;
 import com.u2tzjtne.aboutme.ui.view.LoadDialog;
-import com.u2tzjtne.aboutme.util.Const;
 import com.u2tzjtne.aboutme.util.FileUtil;
 import com.u2tzjtne.aboutme.util.ImageUtil;
 import com.u2tzjtne.aboutme.util.LogUtil;
+import com.u2tzjtne.aboutme.util.ToastUtil;
 
 
 import java.io.File;
@@ -41,7 +41,6 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 import me.nereo.multi_image_selector.MultiImageSelector;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
-import me.nereo.multi_image_selector.utils.FileUtils;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -86,17 +85,17 @@ public class AccountActivity extends AppCompatActivity {
                 break;
             case R.id.item_nickname://昵称
                 Intent nicknameIntent = new Intent(AccountActivity.this, UpdateAccountInfoActivity.class);
-                nicknameIntent.putExtra(Const.UPDATE_ACCOUNT_INFO_TYPE, Const.REQUEST_CODE_NICKNAME);
+                nicknameIntent.putExtra(Constant.UPDATE_ACCOUNT_INFO_TYPE, Constant.REQUEST_CODE_NICKNAME);
                 startActivity(nicknameIntent);
                 break;
             case R.id.item_email://邮箱
                 Intent emailIntent = new Intent(AccountActivity.this, UpdateAccountInfoActivity.class);
-                emailIntent.putExtra(Const.UPDATE_ACCOUNT_INFO_TYPE, Const.REQUEST_CODE_EMAIL);
+                emailIntent.putExtra(Constant.UPDATE_ACCOUNT_INFO_TYPE, Constant.REQUEST_CODE_EMAIL);
                 startActivity(emailIntent);
                 break;
             case R.id.item_update_pass://更改密码
                 Intent passwordIntent = new Intent(AccountActivity.this, UpdateAccountInfoActivity.class);
-                passwordIntent.putExtra(Const.UPDATE_ACCOUNT_INFO_TYPE, Const.REQUEST_CODE_PASSWORD);
+                passwordIntent.putExtra(Constant.UPDATE_ACCOUNT_INFO_TYPE, Constant.REQUEST_CODE_PASSWORD);
                 startActivity(passwordIntent);
                 break;
             case R.id.btn_logout://退出登录
@@ -123,9 +122,9 @@ public class AccountActivity extends AppCompatActivity {
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void showImageSelector() {
         MultiImageSelector.create()
-                .showCamera(true)
-                .single()
-                .start(AccountActivity.this, Const.REQUEST_IMAGE);
+                .showCamera(true)//显示相机
+                .single()//单张图片
+                .start(AccountActivity.this, Constant.REQUEST_IMAGE);
     }
 
     /**
@@ -178,7 +177,7 @@ public class AccountActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == Const.REQUEST_IMAGE) {//选取照片后
+            if (requestCode == Constant.REQUEST_IMAGE) {//选取照片后
                 if (data != null) {
                     List<String> urls = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
                     if (urls.size() > 0) {
@@ -187,7 +186,7 @@ public class AccountActivity extends AppCompatActivity {
                     }
                 }
 
-            } else if (requestCode == Const.REQUEST_CODE_EDITPIC) {//裁剪后
+            } else if (requestCode == Constant.REQUEST_CODE_EDITPIC) {//裁剪后
                 saveImage(data);
             }
         }
@@ -198,7 +197,7 @@ public class AccountActivity extends AppCompatActivity {
      *
      * @param data
      */
-    private void saveImage(Intent data) {
+    private void saveImage(Intent data) {//保存裁剪后的图片
         String facePath = "";
         Bundle extras = data.getExtras();
         if (extras != null) {
@@ -260,7 +259,7 @@ public class AccountActivity extends AppCompatActivity {
                     } else {
                         LoadDialog.dismiss(AccountActivity.this);
                         LogUtil.d("头像上传失败:" + e.toString());
-                        Toast.makeText(AccountActivity.this, "头像上传失败", Toast.LENGTH_SHORT).show();
+                        ToastUtil.s("头像上传失败");
                     }
                 }
             });
@@ -278,15 +277,16 @@ public class AccountActivity extends AppCompatActivity {
                     LoadDialog.dismiss(AccountActivity.this);
                     if (e != null) {
                         LogUtil.d("头像更新失败:" + e.toString());
-                        Toast.makeText(AccountActivity.this, "头像更新失败", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Glide.with(AccountActivity.this).load(avatarUrl).into(userAvatar);
+                        ToastUtil.s("头像更新失败");
+                    } else {
+                        Glide.with(AccountActivity.this)
+                                .load(avatarUrl).into(userAvatar);
                     }
                 }
             });
         } else {
             LogUtil.d("获取头像url出错");
-            Toast.makeText(this, "获取头像url出错", Toast.LENGTH_SHORT).show();
+            ToastUtil.s("获取头像url出错");
         }
 
     }

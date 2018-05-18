@@ -24,12 +24,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.bean.MyUser;
+import com.u2tzjtne.aboutme.constant.Constant;
 import com.u2tzjtne.aboutme.model.UserModel;
 import com.u2tzjtne.aboutme.ui.fragment.AppFragment;
 import com.u2tzjtne.aboutme.ui.fragment.BaseFragment;
 import com.u2tzjtne.aboutme.ui.fragment.MomentsFragment;
 import com.u2tzjtne.aboutme.ui.fragment.WebFragment;
-import com.u2tzjtne.aboutme.util.Const;
 import com.u2tzjtne.aboutme.util.LogUtil;
 import com.u2tzjtne.aboutme.util.SPUtil;
 
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
-            case Const.RESULT_CODE_SEND_MESSAGE:
+            case Constant.RESULT_CODE_SEND_MESSAGE:
                 momentsFragment.onRefresh();
                 break;
         }
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity
 
     //初始化主题
     private void initTheme() {
-        int themeType = SPUtil.getInt(Const.THEME_TYPE, 100);
+        int themeType = SPUtil.getInt(Constant.THEME_TYPE, 100);
         switch (themeType) {
             case 100:
                 setTheme(R.style.AppTheme_Main);
@@ -228,14 +228,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-//        //如果fragment未处理 交由activity处理
-//        if (mBackHandedFragment == null || !mBackHandedFragment.onBackPressed()) {
-//            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-//                super.onBackPressed();
-//            } else {
-//                getSupportFragmentManager().popBackStack();
-//            }
-//        }
     }
 
     @Override
@@ -258,39 +250,49 @@ public class MainActivity extends AppCompatActivity
         if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawers();
         }
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.nav_app) {//应用
-            selectedItem = Const.PAGER_APP;
-        } else if (id == R.id.nav_blog) {//blog
-            selectedItem = Const.PAGER_BLOG;
-        } else if (id == R.id.nav_github) {//github
-            selectedItem = Const.PAGER_GIT_HUB;
-        } else if (id == R.id.nav_moments) {
-            selectedItem = Const.PAGER_MOMENTS;
-        } else if (id == R.id.nav_theme) {
-            //弹出dialog
-            if (dialog != null) {
-                dialog.show();
-            }
-        } else if (id == R.id.nav_setting) {
-            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-        } else if (id == R.id.nav_about_me) {
-            startActivity(new Intent(MainActivity.this, AboutActivity.class));
-        } else if (id == R.id.nav_exit) {
-            System.exit(0);
-            finish();
+        switch (item.getItemId()) {
+            case R.id.nav_app:
+                selectedItem = Constant.PAGER_APP;
+                break;
+            case R.id.nav_blog:
+                Intent blogIntent = new Intent(MainActivity.this, WebActivity.class);
+                blogIntent.putExtra(Constant.WEB_VIEW_URL, Constant.BLOG_URL);
+                startActivity(blogIntent);
+                break;
+            case R.id.nav_github:
+                Intent gitIntent = new Intent(MainActivity.this, WebActivity.class);
+                gitIntent.putExtra(Constant.WEB_VIEW_URL, Constant.GIT_HUB_URL);
+                startActivity(gitIntent);
+                break;
+            case R.id.nav_moments:
+                selectedItem = Constant.PAGER_MOMENTS;
+                break;
+            case R.id.nav_theme:
+                //弹出dialog
+                if (dialog != null) {
+                    dialog.show();
+                }
+                break;
+            case R.id.nav_setting:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                break;
+            case R.id.nav_about_me:
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                break;
+            case R.id.nav_exit:
+                System.exit(0);
+                finish();
+                break;
+
         }
         return true;
     }
 
-
     //切换页面
     private void switchPager(int selectedItem) {
         switch (selectedItem) {
-            case Const.PAGER_APP:
-                toolbar.setVisibility(View.VISIBLE);
+            case Constant.PAGER_APP:
                 fab.setVisibility(View.GONE);
                 if (appFragment == null) {
                     appFragment = new AppFragment();
@@ -299,32 +301,7 @@ public class MainActivity extends AppCompatActivity
                 navigationView.setCheckedItem(R.id.nav_app);
                 toolbar.setTitle(getString(R.string.nav_title_app));
                 break;
-            case Const.PAGER_BLOG:
-                toolbar.setVisibility(View.GONE);
-                fab.setVisibility(View.GONE);
-                if (blogFragment == null) {
-                    blogFragment = new WebFragment();
-                }
-                Bundle bundle1 = new Bundle();
-                bundle1.putString(Const.WEB_VIEW_URL, Const.BLOG_URL);
-                blogFragment.setArguments(bundle1);
-                switchFragment(blogFragment);
-                navigationView.setCheckedItem(R.id.nav_blog);
-                break;
-            case Const.PAGER_GIT_HUB:
-                toolbar.setVisibility(View.GONE);
-                fab.setVisibility(View.GONE);
-                if (gitHubFragment == null) {
-                    gitHubFragment = new WebFragment();
-                }
-                Bundle bundle2 = new Bundle();
-                bundle2.putString(Const.WEB_VIEW_URL, Const.GIT_HUB_URL);
-                gitHubFragment.setArguments(bundle2);
-                switchFragment(gitHubFragment);
-                navigationView.setCheckedItem(R.id.nav_github);
-                break;
-            case Const.PAGER_MOMENTS:
-                toolbar.setVisibility(View.VISIBLE);
+            case Constant.PAGER_MOMENTS:
                 fab.setVisibility(View.VISIBLE);
                 if (momentsFragment == null) {
                     momentsFragment = new MomentsFragment();
@@ -336,7 +313,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    //正确的做法
     private void switchFragment(Fragment targetFragment) {
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
@@ -395,27 +371,27 @@ public class MainActivity extends AppCompatActivity
         switch (view.getId()) {
             case R.id.checkBox0:
                 checkBox0.setChecked(true);
-                SPUtil.putInt(Const.THEME_TYPE, 100);
+                SPUtil.putInt(Constant.THEME_TYPE, 100);
                 break;
             case R.id.checkBox1:
                 checkBox1.setChecked(true);
-                SPUtil.putInt(Const.THEME_TYPE, 101);
+                SPUtil.putInt(Constant.THEME_TYPE, 101);
                 break;
             case R.id.checkBox2:
                 checkBox2.setChecked(true);
-                SPUtil.putInt(Const.THEME_TYPE, 102);
+                SPUtil.putInt(Constant.THEME_TYPE, 102);
                 break;
             case R.id.checkBox3:
                 checkBox3.setChecked(true);
-                SPUtil.putInt(Const.THEME_TYPE, 103);
+                SPUtil.putInt(Constant.THEME_TYPE, 103);
                 break;
             case R.id.checkBox4:
                 checkBox4.setChecked(true);
-                SPUtil.putInt(Const.THEME_TYPE, 104);
+                SPUtil.putInt(Constant.THEME_TYPE, 104);
                 break;
             case R.id.checkBox5:
                 checkBox5.setChecked(true);
-                SPUtil.putInt(Const.THEME_TYPE, 105);
+                SPUtil.putInt(Constant.THEME_TYPE, 105);
                 break;
         }
         dialog.dismiss();
@@ -423,7 +399,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void unSelect() {
-        int type = SPUtil.getInt(Const.THEME_TYPE, 100);
+        int type = SPUtil.getInt(Constant.THEME_TYPE, 100);
         switch (type) {
             case 100:
                 checkBox0.setChecked(false);

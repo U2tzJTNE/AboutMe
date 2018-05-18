@@ -53,44 +53,36 @@ public class AppDetailActivity extends BaseActivity {
      */
     public View onCreateSuccessView() {
         View view = View.inflate(this, R.layout.activity_app_detail, null);
-
         // 初始化应用详情信息
         FrameLayout flDetailAppInfo = view
                 .findViewById(R.id.fl_detail_appinfo);
         DetailAppInfoHolder appInfoHolder = new DetailAppInfoHolder();
         flDetailAppInfo.addView(appInfoHolder.getRootView());
         appInfoHolder.setData(mData);
-
         // 初始化图片信息
         HorizontalScrollView hsvDetailPics = view
                 .findViewById(R.id.hsv_detail_pics);
         DetailAppPicsHolder appPicsHolder = new DetailAppPicsHolder();
         hsvDetailPics.addView(appPicsHolder.getRootView());
         appPicsHolder.setData(mData);
-
-
         // 初始化应用更新信息
         FrameLayout flDetailUpdateInfo = view
                 .findViewById(R.id.fl_detail_update_info);
         DetailAppUpdateHolder appUpdateHolder = new DetailAppUpdateHolder();
         flDetailUpdateInfo.addView(appUpdateHolder.getRootView());
         appUpdateHolder.setData(mData);
-
         // 初始化描述信息
         FrameLayout flDetailDesInfo = view
                 .findViewById(R.id.fl_detail_des);
         DetailAppDesHolder appDesHolder = new DetailAppDesHolder();
         flDetailDesInfo.addView(appDesHolder.getRootView());
         appDesHolder.setData(mData);
-
-
         // 初始化应用其它信息
         FrameLayout flDetailAppOtherInfo = view
                 .findViewById(R.id.fl_detail_other_info);
         DetailAppOtherHolder appOtherInfoHolder = new DetailAppOtherHolder();
         flDetailAppOtherInfo.addView(appOtherInfoHolder.getRootView());
         appOtherInfoHolder.setData(mData);
-
         // 应用权限信息
         RelativeLayout rl_permission = view.findViewById(R.id.rl_app_permission_info);
         rl_permission.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +93,6 @@ public class AppDetailActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-
         // 初始化下载布局
         FrameLayout flDetailDownload = view
                 .findViewById(R.id.fl_detail_download);

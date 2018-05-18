@@ -21,9 +21,9 @@ import com.google.gson.Gson;
 import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.bean.MomentsBean;
 import com.u2tzjtne.aboutme.bean.MyUser;
+import com.u2tzjtne.aboutme.constant.Constant;
 import com.u2tzjtne.aboutme.http.HttpHelper;
 import com.u2tzjtne.aboutme.model.UserModel;
-import com.u2tzjtne.aboutme.util.Const;
 import com.u2tzjtne.aboutme.util.UIUtil;
 import com.vanniktech.emoji.EmojiEditText;
 import com.vanniktech.emoji.EmojiPopup;
@@ -227,7 +227,7 @@ public class EditMessageActivity extends AppCompatActivity implements View.OnCli
                                 }
                             }
                         });
-                        setResult(Const.RESULT_CODE_SEND_MESSAGE);
+                        setResult(Constant.RESULT_CODE_SEND_MESSAGE);
                         finish();
                     } else {
                         UIUtil.runOnUiThread(new Runnable() {

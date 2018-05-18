@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
-import com.u2tzjtne.aboutme.util.Const;
+import com.u2tzjtne.aboutme.constant.Constant;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.ios.IosEmojiProvider;
 
@@ -29,7 +29,7 @@ public class MyApplication extends Application {
         handler = new Handler();
         mainThreadId = android.os.Process.myTid();
         //初始化 Bmob
-        Bmob.initialize(this, Const.BMOB_APPID);
+        Bmob.initialize(this, Constant.BMOB_APPID);
         //初始化 Emoji键盘
         EmojiManager.install(new IosEmojiProvider());
     }

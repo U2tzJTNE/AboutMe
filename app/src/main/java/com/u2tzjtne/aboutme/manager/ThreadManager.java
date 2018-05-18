@@ -22,7 +22,6 @@ public class ThreadManager {
                 if (mThreadPool == null) {
                     int cpuNum = Runtime.getRuntime().availableProcessors();// 获取处理器数量
                     int threadNum = cpuNum * 2 + 1;// 根据cpu数量,计算出合理的线程并发数
-                    System.out.println("cpu num:" + cpuNum);
                     mThreadPool = new ThreadPool(threadNum, threadNum, 0L);
                 }
             }

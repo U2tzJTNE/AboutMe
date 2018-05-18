@@ -16,20 +16,17 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.u2tzjtne.aboutme.bean.AppUpdateBean;
+import com.u2tzjtne.aboutme.constant.Constant;
 import com.u2tzjtne.aboutme.http.HttpHelper;
 import com.u2tzjtne.aboutme.http.Interceptor.ProgressInterceptor;
 import com.u2tzjtne.aboutme.http.ProgressListener;
-import com.u2tzjtne.aboutme.util.Const;
 import com.u2tzjtne.aboutme.util.LogUtil;
 import com.u2tzjtne.aboutme.util.SPUtil;
 
@@ -104,7 +101,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         };
         //是否检查更新 默认检查更新
-        if (SPUtil.getBoolean(Const.IS_CHECK_UPDATE, true)) {
+        if (SPUtil.getBoolean(Constant.IS_CHECK_UPDATE, true)) {
             checkUpdate();//检查更新
         } else {
             loadMain();
@@ -427,7 +424,7 @@ public class SplashActivity extends AppCompatActivity {
      */
     private void loadMain() {
         Intent intent;
-        if (SPUtil.getBoolean(Const.FIRST_LAUNCH, true)) {
+        if (SPUtil.getBoolean(Constant.FIRST_LAUNCH, true)) {
             intent = new Intent(SplashActivity.this, GuideActivity.class);
         } else {
             intent = new Intent(SplashActivity.this, MainActivity.class);

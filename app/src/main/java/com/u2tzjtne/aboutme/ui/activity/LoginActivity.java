@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.bean.MyUser;
 import com.u2tzjtne.aboutme.model.UserModel;
-import com.u2tzjtne.aboutme.util.Const;
+import com.u2tzjtne.aboutme.constant.Constant;
 import com.u2tzjtne.aboutme.util.SPUtil;
 import com.u2tzjtne.aboutme.util.ValidUtil;
 
@@ -169,9 +169,9 @@ public class LoginActivity extends BaseActivity {
                 showProgress(false);
                 if (e == null) {
                     if (myUser.getEmailVerified()) {//邮箱是否验证
-                        SPUtil.putBoolean(Const.IS_LOGIN, true);
-                        SPUtil.putString(Const.USER_EMAIL, email);
-                        SPUtil.putString(Const.USER_PASSWORD, password);
+                        SPUtil.putBoolean(Constant.IS_LOGIN, true);
+                        SPUtil.putString(Constant.USER_EMAIL, email);
+                        SPUtil.putString(Constant.USER_PASSWORD, password);
                         finish();
                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                     } else {

@@ -32,7 +32,7 @@ public class LoadDialog extends AppCompatDialog {
         super(ctx);
 
         this.canNotCancel = canNotCancel;
-        this.getContext().setTheme(android.R.style.Theme_InputMethod);
+        this.getContext().setTheme(android.R.style.Widget_Material_ProgressBar_Large);
         setContentView(R.layout.custom_loding_dialog);
 
         Window window = getWindow();

@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.u2tzjtne.aboutme.R;
 import com.u2tzjtne.aboutme.ui.adapter.GuidePagerAdapter;
-import com.u2tzjtne.aboutme.util.Const;
+import com.u2tzjtne.aboutme.constant.Constant;
 import com.u2tzjtne.aboutme.util.SPUtil;
 
 public class GuideActivity extends AppCompatActivity {
@@ -78,7 +78,7 @@ public class GuideActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //记录是否是第一次启动
-                SPUtil.putBoolean(Const.FIRST_LAUNCH, false);
+                SPUtil.putBoolean(Constant.FIRST_LAUNCH, false);
                 startActivity(new Intent(GuideActivity.this, MainActivity.class));
                 finish();
             }

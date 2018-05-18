@@ -78,10 +78,8 @@ public class DetailAppUpdateHolder extends BaseHolder<AppBean> {
                 animator = ValueAnimator.ofInt(longHeight, shortHeight);
             }
         }
-
         if (animator != null) {
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
                 @Override
                 public void onAnimationUpdate(ValueAnimator arg0) {
                     int height = (Integer) arg0.getAnimatedValue();
@@ -89,19 +87,15 @@ public class DetailAppUpdateHolder extends BaseHolder<AppBean> {
                     tvDes.setLayoutParams(mParams);
                 }
             });
-
             animator.addListener(new Animator.AnimatorListener() {
-
                 @Override
                 public void onAnimationStart(Animator arg0) {
 
                 }
-
                 @Override
                 public void onAnimationRepeat(Animator arg0) {
 
                 }
-
                 @Override
                 public void onAnimationEnd(Animator arg0) {
                     if (isOpen) {
@@ -109,24 +103,12 @@ public class DetailAppUpdateHolder extends BaseHolder<AppBean> {
                     } else {
                         ivArrow.setImageResource(R.drawable.arrow_down);
                     }
-
-//                    // 页面滑动到底端
-//                    final ScrollView scrollView = getScrollView();
-//                    scrollView.post(new Runnable() {
-//
-//                        @Override
-//                        public void run() {
-//                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-//                        }
-//                    });
                 }
-
                 @Override
                 public void onAnimationCancel(Animator arg0) {
 
                 }
             });
-
             animator.setDuration(200);
             animator.start();
         }
@@ -153,15 +135,12 @@ public class DetailAppUpdateHolder extends BaseHolder<AppBean> {
         view.setText(getData().getDes());
         // tvDes得到的规则要作用在模拟的textView上,保持其高度一致
         view.measure(widthMeasureSpec, heightMeasureSpec);
-
         // 返回测量的高度
         return view.getMeasuredHeight();
     }
 
     /**
      * 获取完整展示时的高度
-     *
-     * @return
      */
     private int getLongHeight() {
         int measuredWidth = tvDes.getMeasuredWidth();
@@ -178,24 +157,8 @@ public class DetailAppUpdateHolder extends BaseHolder<AppBean> {
         view.setText(getData().getDes());
         // tvDes得到的规则要作用在模拟的textView上,保持其高度一致
         view.measure(widthMeasureSpec, heightMeasureSpec);
-
         // 返回测量的高度
         return view.getMeasuredHeight();
-    }
-
-    /**
-     * 获取布局中的ScrollView对象 注意: 必须保证布局中有ScrollView, 否则会陷入死循环
-     *
-     * @return
-     */
-    private ScrollView getScrollView() {
-        View parent = (View) tvDes.getParent();
-        // 通过while循环,一层一层往上找, 直到找到ScrollView后结束
-        while (!(parent instanceof ScrollView)) {
-            parent = (View) parent.getParent();
-        }
-
-        return (ScrollView) parent;
     }
 
 }

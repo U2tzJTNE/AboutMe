@@ -74,7 +74,11 @@ public class AppFragment extends Fragment implements LoadMoreFooter.OnLoadMoreLi
         loadMoreFooter = new LoadMoreFooter(context, mRecyclerView, this); // 初始化加载更多
         mRecyclerView.setAdapter(adapter);
         swipeRefreshLayout = view.findViewById(R.id.app_pull_to_refresh);
-        swipeRefreshLayout.setColorSchemeResources(R.color.google_blue, R.color.google_green, R.color.google_red, R.color.google_yellow);
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.google_blue,
+                R.color.google_green,
+                R.color.google_red,
+                R.color.google_yellow);
         swipeRefreshLayout.setOnRefreshListener(this);
         onRefresh();
     }
@@ -82,11 +86,10 @@ public class AppFragment extends Fragment implements LoadMoreFooter.OnLoadMoreLi
     //刷新数据
     @Override
     public void onRefresh() {
-        String index = String.valueOf(0);
         OkHttpClient client = new OkHttpClient();
         //get请求后面追加共同的参数
         HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpHelper.URL + "app").newBuilder();
-        urlBuilder.addQueryParameter("index", index);
+        urlBuilder.addQueryParameter("index", "0");
         Request request = new Request.Builder()
                 .url(urlBuilder.build())
                 .build();
@@ -100,9 +103,9 @@ public class AppFragment extends Fragment implements LoadMoreFooter.OnLoadMoreLi
                     }
                 });
             }
-
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response)
+                    throws IOException {
                 final ArrayList<AppBean> data = parseJson(response.body().string());
                 adapter.setItems(data);
                 UIUtil.runOnUiThread(new Runnable() {
