@@ -29,7 +29,6 @@ import com.u2tzjtne.aboutme.model.UserModel;
 import com.u2tzjtne.aboutme.ui.fragment.AppFragment;
 import com.u2tzjtne.aboutme.ui.fragment.BaseFragment;
 import com.u2tzjtne.aboutme.ui.fragment.MomentsFragment;
-import com.u2tzjtne.aboutme.ui.fragment.WebFragment;
 import com.u2tzjtne.aboutme.util.LogUtil;
 import com.u2tzjtne.aboutme.util.SPUtil;
 
@@ -43,10 +42,6 @@ public class MainActivity extends AppCompatActivity
     //app pager
     private AppFragment appFragment;
     private Fragment currentFragment;
-    //blog pager
-    private WebFragment blogFragment;
-    //github pager
-    private WebFragment gitHubFragment;
     //moments pager
     private MomentsFragment momentsFragment;
 
@@ -258,11 +253,13 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_blog:
                 Intent blogIntent = new Intent(MainActivity.this, WebActivity.class);
                 blogIntent.putExtra(Constant.WEB_VIEW_URL, Constant.BLOG_URL);
+                blogIntent.putExtra("title","我的博客");
                 startActivity(blogIntent);
                 break;
             case R.id.nav_github:
                 Intent gitIntent = new Intent(MainActivity.this, WebActivity.class);
                 gitIntent.putExtra(Constant.WEB_VIEW_URL, Constant.GIT_HUB_URL);
+                gitIntent.putExtra("title","我的开源项目");
                 startActivity(gitIntent);
                 break;
             case R.id.nav_moments:

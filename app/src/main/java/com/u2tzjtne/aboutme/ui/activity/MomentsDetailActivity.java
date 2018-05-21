@@ -36,14 +36,16 @@ public class MomentsDetailActivity extends AppCompatActivity {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    ObjectAnimator upAnim = ObjectAnimator.ofFloat(view, "translationZ", 0);
+                    ObjectAnimator upAnim = ObjectAnimator.ofFloat(view,
+                            "translationZ", 0);
                     upAnim.setDuration(200);
                     upAnim.setInterpolator(new DecelerateInterpolator());
                     upAnim.start();
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-                    ObjectAnimator downAnim = ObjectAnimator.ofFloat(view, "translationZ", 20);
+                    ObjectAnimator downAnim = ObjectAnimator.ofFloat(view,
+                            "translationZ", 20);
                     downAnim.setDuration(200);
                     downAnim.setInterpolator(new AccelerateInterpolator());
                     downAnim.start();

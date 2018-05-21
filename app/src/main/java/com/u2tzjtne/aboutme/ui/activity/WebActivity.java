@@ -64,12 +64,15 @@ public class WebActivity extends AppCompatActivity implements SwipeRefreshLayout
         }
         //默认加载博客页面
         Intent intent = getIntent();
-        String url;
+        String url,title;
         if (intent != null) {
             url = intent.getStringExtra(Constant.WEB_VIEW_URL);
+            title = intent.getStringExtra("title");
         } else {
             url = Constant.BLOG_URL;
+            title = "AboutMe";
         }
+        setTitle(title);
         webview.loadUrl(url);
         //在本WebView中显示
         webview.setWebViewClient(new WebViewClient() {

@@ -87,19 +87,23 @@ public class EditMessageActivity extends AppCompatActivity implements View.OnCli
         alphaAnimationShowIcon.setDuration(500);
         emojiPopup = EmojiPopup.Builder.fromRootView(rootView).build(emojiEditText);
 
-        bubbleSeekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
+        bubbleSeekBar.setOnProgressChangedListener(
+                new BubbleSeekBar.OnProgressChangedListener() {
             @Override
-            public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
+            public void onProgressChanged(BubbleSeekBar bubbleSeekBar,
+                                          int progress, float progressFloat) {
                 emojiEditText.setTextSize(progressFloat);
             }
 
             @Override
-            public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
+            public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar,
+                                              int progress, float progressFloat) {
 
             }
 
             @Override
-            public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
+            public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar,
+                                             int progress, float progressFloat) {
                 emojiEditText.setTextSize(progress);
                 fontSize = progress;
             }
@@ -111,7 +115,8 @@ public class EditMessageActivity extends AppCompatActivity implements View.OnCli
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.radioButton0://默认主题
-                        layout_content.setCardBackgroundColor(getResources().getColor(R.color.white));
+                        layout_content
+                                .setCardBackgroundColor(getResources().getColor(R.color.white));
                         bgColor = 0;
                         break;
                     case R.id.radioButton1:
